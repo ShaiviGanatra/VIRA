@@ -15,7 +15,8 @@ submitCategory.addEventListener('click', e =>
         categoryShortname: categoryShortname.value,
         categoryDescription: categoryDescription.value
     })
-    .then(() => {console.log('Category Inserted Succesfully');})
+    .then(() => { window.location.href = "category.html";
+        console.log('Category Inserted Succesfully');})
     .catch(error => {console.error(error)});
 });
 
