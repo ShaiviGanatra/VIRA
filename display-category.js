@@ -6,6 +6,7 @@ const categoryDisplay = document.getElementById('categoryDisplay');
 categoryCollection.onSnapshot(function(querySnapshot) {
     
         // doc.data() is never undefined for query doc snapshots
+<<<<<<< HEAD
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
                 if(i === 0){
@@ -24,6 +25,17 @@ categoryCollection.onSnapshot(function(querySnapshot) {
         });
         categoryDisplay.innerHTML += '</div>'
         
+=======
+        querySnapshot.docChanges().forEach(function(change){
+            if(change.type === "added"){
+                  categoryDisplay.innerHTML += "<div class = 'card-body'><h4>" + change.doc.data().categoryName + 
+                  "</h4><p>" +change.doc.data().categoryShortname+"</p><p class='card-text text-muted'>" 
+                  +change.doc.data().categoryDescription +"</p></div>"
+            }
+
+        });
+      
+>>>>>>> c3056f05c8d1cd6b2fe924d9cdb560679a2e785a
 
         
 });
