@@ -8304,4 +8304,45 @@ tr:first-child > td > .fc-day-grid-event {
   line-height: 150px;
   text-shadow: white 1px 1px, #5f6693 2px 2px, #5f6693 3px 3px;
 }
+.searchbar{
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 40px;
+  background-color: #353b48;
+  border-radius: 30px;
+  padding: 5px;
+ }
+.search_input{
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color: transparent;
+    line-height: 30px;
+    transition: width 0.4s linear;
+  }
+.searchbar > .search_input{
+  padding: 0 10px;
+  width: 450px;
+  caret-color:white;
+  transition: width 0.4s linear;
+}
+  .searchbar > .search_icon{
+  background: white;
+  color: blue;
+  }
+
+  .search_icon{
+  height: 30px;
+  width: 30px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color:white;
+  text-decoration:none;
+  }
+    
 /*# sourceMappingURL=style.css.map */

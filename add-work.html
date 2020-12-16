@@ -2,10 +2,10 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Frogetor - Responsive Bootstrap 4 Admin Dashboard</title>
+        <title> VIRA </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A premium admin dashboard template by mannatthemes" name="description" />
-        <meta content="Mannatthemes" name="author" />
+        <meta content="Integrated Business Process Management System for Virtual Assistants" name="VIRA" />
+        <meta content="Business Process Management System" name="VIRA" />
 
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -28,19 +28,21 @@
                        </a>
                      
                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                         <ul class="navbar-nav mr-auto">
+                         <ul class="navbar-nav ml-auto">
                            <li class="nav-item">
                                <a class="nav-link" href="index.html">Home</a>
                              </li>
                            <li class="nav-item">
-                             <a class="nav-link" href="#">My List</a>
+                             <a class="nav-link" href="list.html">My List</a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="#">Category</a>
+                               <a class="nav-link" href="category.html">Category</a>
                              </li>
                            <li class="nav-item">
-                           <a class="nav-link" href="#">Works</a>
+                           <a class="nav-link" href="work.html">Works</a>
                            </li>
+                           </ul>
+                           
                        </div>
                      </nav>
                    <!-- end navbar-->
@@ -72,11 +74,20 @@
                                            </a>
                                        </li>
                                        <li>
-                                           <a href="index.html">
-                                               <i class="mdi mdi-book-open-page-variant"></i>
-                                               Search
-                                           </a>
-                                       </li>
+                                        <div class="container">
+                                            <div style="padding-right :600px"></div>
+                                        </div>
+    
+                                    </li>
+                                    <li class="hide-phone app-search">
+                                        <form role="search" class="">
+                                            <input type="text" placeholder="Search..." class="form-control">
+                                            <a href=""><i class="fas fa-search"></i></a>
+                                        </form>
+                                    </li>
+                                       <li>
+                                        <button type="submit" class="btn btn-primary ml-auto" id="search">Search</button>
+                                    </li>
                                    </ul>
                                    <!-- End navigation menu -->
                                </div> <!-- end navigation -->
@@ -99,10 +110,10 @@
                                              <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label text-right">Select Category</label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control">
-                                                        <option>One Week</option>
-                                                        <option>Large select</option>
-                                                        <option>Small select</option>
+                                                    <select class="form-control" id="selectCategory">
+                                                        <option>Digital Marketing</option>
+                                                        <option>Email Marketing</option>
+                                                        <option>Proposal Writing</option>
                                                     </select>
                                                 
                                                 </div>
@@ -110,31 +121,31 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-sm-2 col-form-label text-right">Short Code</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="text" placeholder="Enter 4 Digit Identifier" id="example-text-input">
+                                                    <input class="form-control" type="text" placeholder="Enter 4 Digit Identifier" id="shortCode">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Work Title</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Enter Title of the Work" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Enter Title of the Work" id="workTitle">
                                                 </div>
                                             </div> 
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Work Description</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Enter Short Description Of Work for Vira" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Enter Short Description Of Work for Vira" id="workDescription">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Long Description</label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="4" cols="50" style="color:black" placeholder = "Enter Long Description Of Work for Vira" name="comment" form="usrform" class="form-control"></textarea>
+                                                    <textarea rows="4" cols="50" style="color: #a8a8b1" placeholder = "Enter Long Description Of Work for Vira" name="comment" form="usrform" class="form-control" id="longDescription"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label text-right">Time Required</label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control">
+                                                    <select class="form-control" id="timeRequired">
                                                         <option>One Week</option>
                                                         <option>Two Weeks</option>
                                                         <option>Three Weeks</option>
@@ -144,54 +155,54 @@
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Skills Required</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Enter skills required for this Work" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Enter skills required for this Work" id="skillsRequired">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Tools Required</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Enter assistance tools for this Work" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Enter assistance tools for this Work" id="toolsRequired">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Client Questions</label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="4" cols="50" name="comment" form="usrform" class="form-control"></textarea>
+                                                    <textarea rows="4" cols="50" name="comment" form="usrform" class="form-control" id="clientQuestions"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Training PDF</label>
                                                 <div class="col-sm-9">
-                                                    <button type="submit" class="btn btn-primary ml-2">Upload PDF</button>
+                                                    <!-- <button type="file" class="btn btn-primary ml-2" id="trainingPDF">Upload PDF</button> -->
+                                                    <input type="file" id="myFile" name="filename">
                                                 </div>
                                             </div>
-                                            
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Video Training</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Enter video URL link here" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Enter video URL link here" id="videoTraining">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Work Folder</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Name of the Work Folder" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Name of the Work Folder" id="workFolder">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Work Wikipedia</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Enter Wikipedia Link Here" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Enter Wikipedia Link Here" id="workWikipedia">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Related Work</label>
                                                 <div class="col-sm-9">
-                                                    <input class="form-control" type="email" placeholder="Any Related Work" id="example-email-input">
+                                                    <input class="form-control" type="email" placeholder="Any Related Work" id="relatedWork">
                                                 </div>
                                             </div>
-                                            <button type="submit" class="btn btn-primary ml-4">Save Draft</button>
-                                            <button type="submit" class="btn btn-success ml-4 mr-5 btn-group float-right">Publish</button>
+                                            <button type="submit" class="btn btn-primary ml-4" id="saveDraft">Save Draft</button>
+                                            <button type="submit" class="btn btn-success ml-4 mr-5 btn-group float-right" id="publish">Publish</button>
                                             </div>                                   
                                         </div>
                                     </div>                                                                      
@@ -218,6 +229,29 @@
 
         <!-- App js -->
         <script src="assets/js/app.js"></script>
+
+        
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+        
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyDmbhoJ3ueIYrZYWe5KzGiLOMLnd5-7V68",
+                authDomain: "vira-db.firebaseapp.com",
+                databaseURL: "https://vira-db-default-rtdb.firebaseio.com",
+                projectId: "vira-db",
+                storageBucket: "vira-db.appspot.com",
+                messagingSenderId: "252309077205",
+                appId: "1:252309077205:web:de0ce8e57f996fdf06f65c",
+                measurementId: "G-6FT7CDJ9YZ"
+                };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            
+        </script>
+        <script src="./function.js"></script>
 
     </body>
 </html>
