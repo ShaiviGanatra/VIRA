@@ -79,9 +79,6 @@ categoryCollection.onSnapshot(function(querySnapshot) {
         // doc.data() is never undefined for query doc snapshots
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
-                if(i === 0){
-                    document.getElementById("categoryDisplay").innerHTML += "<div class ='row'>"
-                }
                 document.getElementById("categoryDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='card-body'><h4>" + change.doc.data().categoryName + 
                 "</h4><p>" +change.doc.data().categoryShortname+"</p><p class='card-text text-muted'>" 
                 +change.doc.data().categoryDescription +"</p></div></div>"
@@ -96,3 +93,25 @@ categoryCollection.onSnapshot(function(querySnapshot) {
     }    
 });
 
+/****************************Display Work****************************/
+
+const workDisplay = document.getElementById('workDisplay');
+
+workCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("workDisplay") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("workDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='card-body'><h4>" + change.doc.data().workTitle + 
+                "</h4><p>" +change.doc.data().workDescription+"</p><p class='card-text text-muted'>" 
+                +change.doc.data().longDescription +"</p></div></div>"
+                if(i!=0 && i%2 == 0){
+
+                    // add end of row ,and start new row on every 2 elements
+                    document.getElementById("workDisplay").innerHTML += '</div>'
+                  }
+            }
+        });
+        document.getElementById("workDisplay").innerHTML += '</div>'
+    }    
+});
