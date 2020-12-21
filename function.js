@@ -9,7 +9,7 @@ const timeRequired = document.getElementById('timeRequired');
 const skillsRequired = document.getElementById('skillsRequired');
 const toolsRequired = document.getElementById('toolsRequired');
 const clientQuestions = document.getElementById('clientQuestions');
-const trainingPDF = document.getElementById('trainingPDF');
+// const trainingPDF = document.getElementById('trainingPDF');
 const videoTraining = document.getElementById('videoTraining');
 const workFolder = document.getElementById('workFolder');
 const workWikipedia = document.getElementById('workWikipedia');
@@ -18,8 +18,8 @@ const relatedWork = document.getElementById('relatedWork');
 const database = firebase.firestore();
 const workCollection = database.collection('Work')
 
-if(document.getElementById("saveDraft")){
-    document.getElementById("saveDraft").addEventListener('click', e =>
+if(document.getElementById("publish")){
+    document.getElementById("publish").addEventListener('click', e =>
 {
     e.preventDefault();
     workCollection.add({
@@ -32,14 +32,15 @@ if(document.getElementById("saveDraft")){
         skillsRequired: skillsRequired.value,
         toolsRequired: toolsRequired.value,
         clientQuestions: clientQuestions.value,
-        trainingPDF: trainingPDF.value,
+        // trainingPDF: trainingPDF.value,
         videoTraining: videoTraining.value,
         workFolder: workFolder.value,
         workWikipedia: workWikipedia.value,
         relatedWork: relatedWork.value
 
     })
-    .then(() => {console.log('Work Inserted Succesfully');})
+    .then(() => { window.location.href = "work.html";
+        console.log('Work Inserted Succesfully');})
     .catch(error => {console.error(error)});
 });
 }
