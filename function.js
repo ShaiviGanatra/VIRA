@@ -28,10 +28,8 @@ if(addworkform != null){
     {
         e.preventDefault();
         if(selectCategory.value != "" && shortCode.value != "" && workTitle.value != "" && workDescription.value != ""
-        && longDescription.value != "" && timeRequired.value != "" && skillsRequired.value != "" && toolsRequired.value != ""
-        && clientQuestions.value != "" && videoTraining.value != "" && videoTraining.value != "" && relatedWork.value != "" )
+        && longDescription.value != "" && timeRequired.value != "" && skillsRequired.value != "" && toolsRequired.value != "")
         {
-
             workCollection.add({
                 selectCategory: selectCategory.value,
                 shortCode: shortCode.value,
@@ -46,28 +44,25 @@ if(addworkform != null){
                 videoTraining: videoTraining.value,
                 workFolder: workFolder.value,
                 workWikipedia: workWikipedia.value,
-                relatedWork: relatedWork.value
-        
+                relatedWork: relatedWork.value,
+                status: 1
             })
             .then(() => { window.location.href = "work.html";
                 console.log('Work Inserted Succesfully');
                 alert('Work Inserted Succesfully');})
             .catch(error => {console.error(error)});
-        
-           
            if(publish != null){
                 publish.disabled = false;
            }           
         }else{
-            console.log("must fill all the inputs");
-            alert('Work Inserted Succesfully');
+            console.log("Must fill all the Mandatory (* marked) Inputs");
+            alert('Must fill all the Mandatory (* marked) Inputs');
         }
     })
     saveDraft.addEventListener("click" , async(e) =>
     {
         e.preventDefault();
-        if(selectCategory.value != ""  && workTitle.value != "" && workDescription.value != ""
-        && longDescription.value != "")
+        if(selectCategory.value != ""  && workTitle.value != "" && workDescription.value != "")
         {
 
             workCollection.add({
@@ -84,7 +79,8 @@ if(addworkform != null){
                 videoTraining: videoTraining.value,
                 workFolder: workFolder.value,
                 workWikipedia: workWikipedia.value,
-                relatedWork: relatedWork.value
+                relatedWork: relatedWork.value,
+                status: 2
         
             })
             .then(() => { window.location.href = "work.html";
@@ -94,8 +90,8 @@ if(addworkform != null){
         
                      
         }else{
-            console.log("Must fill all the mandatory inputs");
-            alert("Must fill all the mandatory inputs")
+            console.log("Must fill all the Mandatory Inputs : Category, Work Title, Work Description");
+            alert("Must fill all the Mandatory Inputs : Category, Work Title, Work Description")
         }
     })
 }
@@ -171,7 +167,9 @@ workCollection.onSnapshot(function(querySnapshot) {
         document.getElementById("workDisplay").innerHTML += '</div>'
     }    
 });
+
 /****************************Detailed Work-card****************************/
+
 const cardselectCategory = document.getElementById('cardselectCategory');
 
 workCollection.onSnapshot(function(querySnapshot) {
@@ -180,7 +178,6 @@ workCollection.onSnapshot(function(querySnapshot) {
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
                 document.getElementById("cardselectCategory").innerHTML += change.doc.data().selectCategory
-                
             }
         });
         //document.getElementById("cardselectCategory").innerHTML += '</div>'
@@ -193,7 +190,6 @@ workCollection.onSnapshot(function(querySnapshot) {
                 
             }
         });
-       
     }   
     if(document.getElementById("cardworkTitle") != null){
         // doc.data() is never undefined for query doc snapshots
@@ -290,4 +286,20 @@ workCollection.onSnapshot(function(querySnapshot) {
             }
         });
     }
+});
+
+
+/****************************Fill Select Category****************************/
+
+const sc = document.getElementById('selectCategory');
+
+categoryCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("selectCategory") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("selectCategory").innerHTML += "<option>" + change.doc.data().categoryName + "</option>"
+            }
+        });
+    }    
 });
