@@ -15,34 +15,89 @@ const workFolder = document.getElementById('workFolder');
 const workWikipedia = document.getElementById('workWikipedia');
 const relatedWork = document.getElementById('relatedWork');
 
+const addworkform = document.querySelector("#addworkform");
+const publish = document.querySelector("#publish");
+const saveDraft = document.querySelector("#saveDraft");
+
 const database = firebase.firestore();
 const workCollection = database.collection('Work')
 
-if(document.getElementById("publish")){
-    document.getElementById("publish").addEventListener('click', e =>
-{
-    e.preventDefault();
-    workCollection.add({
-        selectCategory: selectCategory.value,
-        shortCode: shortCode.value,
-        workTitle: workTitle.value,
-        workDescription: workDescription.value,
-        longDescription: longDescription.value,
-        timeRequired: timeRequired.value,
-        skillsRequired: skillsRequired.value,
-        toolsRequired: toolsRequired.value,
-        clientQuestions: clientQuestions.value,
-        // trainingPDF: trainingPDF.value,
-        videoTraining: videoTraining.value,
-        workFolder: workFolder.value,
-        workWikipedia: workWikipedia.value,
-        relatedWork: relatedWork.value
+if(addworkform != null){
+    let d;
+    publish.addEventListener("click" , async(e) =>
+    {
+        e.preventDefault();
+        if(selectCategory.value != "" && shortCode.value != "" && workTitle.value != "" && workDescription.value != ""
+        && longDescription.value != "" && timeRequired.value != "" && skillsRequired.value != "" && toolsRequired.value != ""
+        && clientQuestions.value != "" && videoTraining.value != "" && videoTraining.value != "" && relatedWork.value != "" )
+        {
 
+            workCollection.add({
+                selectCategory: selectCategory.value,
+                shortCode: shortCode.value,
+                workTitle: workTitle.value,
+                workDescription: workDescription.value,
+                longDescription: longDescription.value,
+                timeRequired: timeRequired.value,
+                skillsRequired: skillsRequired.value,
+                toolsRequired: toolsRequired.value,
+                clientQuestions: clientQuestions.value,
+                // trainingPDF: trainingPDF.value,
+                videoTraining: videoTraining.value,
+                workFolder: workFolder.value,
+                workWikipedia: workWikipedia.value,
+                relatedWork: relatedWork.value
+        
+            })
+            .then(() => { window.location.href = "work.html";
+                console.log('Work Inserted Succesfully');
+                alert('Work Inserted Succesfully');})
+            .catch(error => {console.error(error)});
+        
+           
+           if(publish != null){
+                publish.disabled = false;
+           }           
+        }else{
+            console.log("must fill all the inputs");
+            alert('Work Inserted Succesfully');
+        }
     })
-    .then(() => { window.location.href = "work.html";
-        console.log('Work Inserted Succesfully');})
-    .catch(error => {console.error(error)});
-});
+    saveDraft.addEventListener("click" , async(e) =>
+    {
+        e.preventDefault();
+        if(selectCategory.value != ""  && workTitle.value != "" && workDescription.value != ""
+        && longDescription.value != "")
+        {
+
+            workCollection.add({
+                selectCategory: selectCategory.value,
+                shortCode: shortCode.value,
+                workTitle: workTitle.value,
+                workDescription: workDescription.value,
+                longDescription: longDescription.value,
+                timeRequired: timeRequired.value,
+                skillsRequired: skillsRequired.value,
+                toolsRequired: toolsRequired.value,
+                clientQuestions: clientQuestions.value,
+                // trainingPDF: trainingPDF.value,
+                videoTraining: videoTraining.value,
+                workFolder: workFolder.value,
+                workWikipedia: workWikipedia.value,
+                relatedWork: relatedWork.value
+        
+            })
+            .then(() => { window.location.href = "work.html";
+                console.log('Work Inserted Succesfully');
+                alert('Work Inserted Succesfully');})
+            .catch(error => {console.error(error)});
+        
+                     
+        }else{
+            console.log("Must fill all the mandatory inputs");
+            alert("Must fill all the mandatory inputs")
+        }
+    })
 }
 
 /****************************Add Category****************************/
