@@ -327,8 +327,9 @@ database.collection("Work").get().then(function(querySnapshot) {
         i=i+1;
 
     });
+    let data 
     $('#workDisplay').DataTable( {
-                    data: dataSet,
+                    data : dataSet,
                     columns: [
                             { title: "Work Title" },
                             { title: "Category" },
@@ -336,5 +337,10 @@ database.collection("Work").get().then(function(querySnapshot) {
                             { title: "Skills Required" },
                             { title: "Tools Required" }
                     ]
-            });
+                
+            }).on('click', data, function () {
+                
+                alert( 'You clicked on a row' );
+            } );;
+                
 });
