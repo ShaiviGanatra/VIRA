@@ -147,146 +147,146 @@ categoryCollection.onSnapshot(function(querySnapshot) {
 
 /****************************Display Work****************************/
 
-const workDisplay = document.getElementById('workDisplay');
+// const workDisplay = document.getElementById('workDisplay');
 
-workCollection.onSnapshot(function(querySnapshot) {
-    if(document.getElementById("workDisplay") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("workDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='card-body'><h4>" + change.doc.data().workTitle + 
-                "</h4><p>" +change.doc.data().workDescription+"</p><p class='card-text text-muted'>" 
-                +change.doc.data().longDescription +"</p></div></div>"
-                if(i!=0 && i%2 == 0){
+// workCollection.onSnapshot(function(querySnapshot) {
+//     if(document.getElementById("workDisplay") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("workDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='card-body'><h4>" + change.doc.data().workTitle + 
+//                 "</h4><p>" +change.doc.data().workDescription+"</p><p class='card-text text-muted'>" 
+//                 +change.doc.data().longDescription +"</p></div></div>"
+//                 if(i!=0 && i%2 == 0){
 
-                    // add end of row ,and start new row on every 2 elements
-                    document.getElementById("workDisplay").innerHTML += '</div>'
-                  }
-            }
-        });
-        document.getElementById("workDisplay").innerHTML += '</div>'
-    }    
-});
+//                     // add end of row ,and start new row on every 2 elements
+//                     document.getElementById("workDisplay").innerHTML += '</div>'
+//                   }
+//             }
+//         });
+//         document.getElementById("workDisplay").innerHTML += '</div>'
+//     }    
+// });
 
 /****************************Detailed Work-card****************************/
 
-const cardselectCategory = document.getElementById('cardselectCategory');
+// const cardselectCategory = document.getElementById('cardselectCategory');
 
-workCollection.onSnapshot(function(querySnapshot) {
-    if(document.getElementById("cardselectCategory") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardselectCategory").innerHTML += change.doc.data().selectCategory
-            }
-        });
-        //document.getElementById("cardselectCategory").innerHTML += '</div>'
-    }    
-    if(document.getElementById("cardshortCode") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardshortCode").innerHTML += change.doc.data().shortCode
+// workCollection.onSnapshot(function(querySnapshot) {
+//     if(document.getElementById("cardselectCategory") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardselectCategory").innerHTML += change.doc.data().selectCategory
+//             }
+//         });
+//         //document.getElementById("cardselectCategory").innerHTML += '</div>'
+//     }    
+//     if(document.getElementById("cardshortCode") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardshortCode").innerHTML += change.doc.data().shortCode
                 
-            }
-        });
-    }   
-    if(document.getElementById("cardworkTitle") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardworkTitle").innerHTML += change.doc.data().workTitle
+//             }
+//         });
+//     }   
+//     if(document.getElementById("cardworkTitle") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardworkTitle").innerHTML += change.doc.data().workTitle
                 
-            }
-        });
-    } 
-    if(document.getElementById("cardworkDescription") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardworkDescription").innerHTML += change.doc.data().workDescription
+//             }
+//         });
+//     } 
+//     if(document.getElementById("cardworkDescription") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardworkDescription").innerHTML += change.doc.data().workDescription
                 
-            }
-        });
-    } 
-    if(document.getElementById("cardlongDescription") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardlongDescription").innerHTML += change.doc.data().longDescription
+//             }
+//         });
+//     } 
+//     if(document.getElementById("cardlongDescription") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardlongDescription").innerHTML += change.doc.data().longDescription
                 
-            }
-        });
-    } 
-    if(document.getElementById("cardTimeRequired") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardTimeRequired").innerHTML += change.doc.data().timeRequired
+//             }
+//         });
+//     } 
+//     if(document.getElementById("cardTimeRequired") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardTimeRequired").innerHTML += change.doc.data().timeRequired
                 
-            }
-        });
-    }
-    if(document.getElementById("cardskillsRequired") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardskillsRequired").innerHTML += change.doc.data().skillsRequired
+//             }
+//         });
+//     }
+//     if(document.getElementById("cardskillsRequired") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardskillsRequired").innerHTML += change.doc.data().skillsRequired
                 
-            }
-        });
-    }
-    if(document.getElementById("cardtoolsRequired") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardtoolsRequired").innerHTML += change.doc.data().toolsRequired
+//             }
+//         });
+//     }
+//     if(document.getElementById("cardtoolsRequired") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardtoolsRequired").innerHTML += change.doc.data().toolsRequired
                 
-            }
-        });
-    }
-    if(document.getElementById("cardclientQuestion") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardclientQuestion").innerHTML += change.doc.data().clientQuestions
+//             }
+//         });
+//     }
+//     if(document.getElementById("cardclientQuestion") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardclientQuestion").innerHTML += change.doc.data().clientQuestions
                 
-            }
-        });
-    }
-    if(document.getElementById("cardvideoTraining") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardvideoTraining").innerHTML += change.doc.data().videoTraining
-            }
-        });
-    }
-    if(document.getElementById("cardworkFolder") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardworkFolder").innerHTML += change.doc.data().workFolder
-            }
-        });
-    }
-    if(document.getElementById("cardworkWikipedia") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardworkWikipedia").innerHTML += change.doc.data().workWikipedia
-            }
-        });
-    }
-    if(document.getElementById("cardrelatedWork") != null){
-        // doc.data() is never undefined for query doc snapshots
-        querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.getElementById("cardrelatedWork").innerHTML += change.doc.data().relatedWork
-            }
-        });
-    }
-});
+//             }
+//         });
+//     }
+//     if(document.getElementById("cardvideoTraining") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardvideoTraining").innerHTML += change.doc.data().videoTraining
+//             }
+//         });
+//     }
+//     if(document.getElementById("cardworkFolder") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardworkFolder").innerHTML += change.doc.data().workFolder
+//             }
+//         });
+//     }
+//     if(document.getElementById("cardworkWikipedia") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardworkWikipedia").innerHTML += change.doc.data().workWikipedia
+//             }
+//         });
+//     }
+//     if(document.getElementById("cardrelatedWork") != null){
+//         // doc.data() is never undefined for query doc snapshots
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("cardrelatedWork").innerHTML += change.doc.data().relatedWork
+//             }
+//         });
+//     }
+// });
 
 
 /****************************Fill Select Category****************************/
