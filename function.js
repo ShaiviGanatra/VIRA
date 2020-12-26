@@ -1,29 +1,29 @@
 /****************************Add Work****************************/ 
 
-const selectCategory = document.getElementById('selectCategory');
-const shortCode = document.getElementById('shortCode');
-const workTitle = document.getElementById('workTitle');
-const workDescription = document.getElementById('workDescription');
-const longDescription = document.getElementById('longDescription');
-const timeRequired = document.getElementById('timeRequired');
-const skillsRequired = document.getElementById('skillsRequired');
-const toolsRequired = document.getElementById('toolsRequired');
-const clientQuestions = document.getElementById('clientQuestions');
-// const trainingPDF = document.getElementById('trainingPDF');
-const videoTraining = document.getElementById('videoTraining');
-const workFolder = document.getElementById('workFolder');
-const workWikipedia = document.getElementById('workWikipedia');
-const relatedWork = document.getElementById('relatedWork');
+let selectCategory = document.getElementById('selectCategory');
+let shortCode = document.getElementById('shortCode');
+let workTitle = document.getElementById('workTitle');
+let workDescription = document.getElementById('workDescription');
+let longDescription = document.getElementById('longDescription');
+let timeRequired = document.getElementById('timeRequired');
+let skillsRequired = document.getElementById('skillsRequired');
+let toolsRequired = document.getElementById('toolsRequired');
+let clientQuestions = document.getElementById('clientQuestions');
+// let trainingPDF = document.getElementById('trainingPDF');
+let videoTraining = document.getElementById('videoTraining');
+let workFolder = document.getElementById('workFolder');
+let workWikipedia = document.getElementById('workWikipedia');
+let relatedWork = document.getElementById('relatedWork');
 
-const addworkform = document.querySelector("#addworkform");
-const publish = document.querySelector("#publish");
-const saveDraft = document.querySelector("#saveDraft");
+let addworkform = document.querySelector("#addworkform");
+let publish = document.querySelector("#publish");
+let saveDraft = document.querySelector("#saveDraft");
 
-const database = firebase.firestore();
-const workCollection = database.collection('Work')
+let database = firebase.firestore();
+let workCollection = database.collection('Work')
 
 if(addworkform != null){
-    let d;
+    // let d;
     if(publish)
     {
     publish.addEventListener("click" , async(e) =>
@@ -323,40 +323,61 @@ workCollection.onSnapshot(function(querySnapshot) {
      }
  });
 
+
+/****************************Open Each Work Table Info****************************/
+
+var tbody = document.getElementsByTagName("tbody")[0];
  $(document).on('click', '.custom-clickable-row', function(e){
-    var url = $(this).data('href');
-    var rowId =  
-                e.target.parentNode.parentNode.id; 
-              //this gives id of tr whose button was clicked 
-                var data = document.getElementById(rowId).getElementsByTagName("td");  
-              /*returns array of all elements with  
-              "row-data" class within the row with given id*/ 
-  
-                var Worktitle = data[0].innerHTML; 
-                var Category = data[1].innerHTML; 
-                var WorkDescription = data[2].innerHTML;
-                var skillsReq = data[3].innerHTML;
-                var ToolsReq = data[4].innerHTML;
-  
-                alert("Worktitle: " + Worktitle + "\nCategory: " + Category+"\nWorkDescription: " +
-                WorkDescription+ "\nskillsReq: " + skillsReq+"\nToolsReq: " + ToolsReq); 
-    window.location = url;
-});
-/* (----------------to retrieve the contents of a single document using get():------------------------)
-var docRef = db.collection("Work").doc("SF");
-
-docRef.get().then(function(doc) {
-    if (doc.exists) {
-        console.log("Document data:", doc.data());
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+    // var url = $(this).data('href');
+    e = e || window.event;
+    var WorkTitle;
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
     }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
-*/
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+            WorkTitle = (cells[0].innerHTML);
+    }
+    // alert(WorkTitle);
 
+    //to get doc id and rest data of the row being clicked by maping work title from firebase
+    database.collection("Work").where("workTitle", "==", WorkTitle)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            
+            console.log(doc.id, " => ", doc.data());
+            
+            selectCategory = doc.data().selectCategory;
+            shortCode = doc.data().shortCode;
+            workTitle = doc.data().workTitle;
+            workDescription = doc.data().workDescription;
+            longDescription = doc.data().longDescription;
+            timeRequired = doc.data().timeRequired;
+            skillsRequired = doc.data().skillsRequired;
+            toolsRequired = doc.data().toolsRequired;
+            clientQuestions = doc.data().clientQuestions;
+            videoTraining = doc.data().videoTraining;
+            workFolder = doc.data().workFolder;
+            workWikipedia = doc.data().workWikipedia;
+            relatedWork = doc.data().relatedWork;
+            
+            //redirecting to add-work-edit
+            window.location.href = "add-work-edit.html";
+            // $("selectCategory").value = selectCategory;
+            // $("shortCode").value = shortCode;
+            // $("workTitle").value = workTitle;
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    
+    
+    
+});
 
 /*
 let postsArray = [];

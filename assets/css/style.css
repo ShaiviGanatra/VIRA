@@ -8347,5 +8347,10 @@ tr:first-child > td > .fc-day-grid-event {
   .custom-clickable-row {
 	cursor: pointer;
 }
-    
+
+/*=================work table====================*/
+th{
+  color:white;
+}
+
 /*# sourceMappingURL=style.css.map */
