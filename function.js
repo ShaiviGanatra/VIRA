@@ -5,7 +5,8 @@ let shortCode = document.getElementById('shortCode');
 let workTitle = document.getElementById('workTitle');
 let workDescription = document.getElementById('workDescription');
 let longDescription = document.getElementById('longDescription');
-let timeRequired = document.getElementById('timeRequired');
+const startDate = document.getElementById('startDate');
+const endDate = document.getElementById('endDate');
 let skillsRequired = document.getElementById('skillsRequired');
 let toolsRequired = document.getElementById('toolsRequired');
 let clientQuestions = document.getElementById('clientQuestions');
@@ -30,7 +31,7 @@ if(addworkform != null){
     {
         e.preventDefault();
         if(selectCategory.value != "" && shortCode.value != "" && workTitle.value != "" && workDescription.value != ""
-        && longDescription.value != "" && timeRequired.value != "" && skillsRequired.value != "" && toolsRequired.value != "")
+        && longDescription.value != "" && startDate.value != "" && endDate.value != "" && skillsRequired.value != "" && toolsRequired.value != "")
         {
             workCollection.add({
                 selectCategory: selectCategory.value,
@@ -38,7 +39,8 @@ if(addworkform != null){
                 workTitle: workTitle.value,
                 workDescription: workDescription.value,
                 longDescription: longDescription.value,
-                timeRequired: timeRequired.value,
+                startDate: startDate.value,
+                endDate: endDate.value,
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -75,7 +77,8 @@ if(addworkform != null){
                 workTitle: workTitle.value,
                 workDescription: workDescription.value,
                 longDescription: longDescription.value,
-                timeRequired: timeRequired.value,
+                startDate: startDate.value,
+                endDate: endDate.value,
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -317,7 +320,7 @@ workCollection.onSnapshot(function(querySnapshot) {
          querySnapshot.docChanges().forEach(function(change,i){
              if(change.type === "added"){
                  document.getElementById("workDisplay").innerHTML +="<tr class='custom-clickable-row' data-href='add-work-edit.html'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
-                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().ToolsRequired+"</td></tr>"
+                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
              }
          });
      }
@@ -347,11 +350,11 @@ var tbody = document.getElementsByTagName("tbody")[0];
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             // doc.data() is never undefined for query doc snapshots
-            
+            //window.location.href = "add-work-edit.html";
             console.log(doc.id, " => ", doc.data());
-            
-            selectCategory = doc.data().selectCategory;
-            shortCode = doc.data().shortCode;
+           if(doc.type === "added"){
+            selectCategory= doc.data().selectCategory;
+            shortCode=doc.data().shortCode;
             workTitle = doc.data().workTitle;
             workDescription = doc.data().workDescription;
             longDescription = doc.data().longDescription;
@@ -363,9 +366,9 @@ var tbody = document.getElementsByTagName("tbody")[0];
             workFolder = doc.data().workFolder;
             workWikipedia = doc.data().workWikipedia;
             relatedWork = doc.data().relatedWork;
-            
+            }
             //redirecting to add-work-edit
-            window.location.href = "add-work-edit.html";
+            
             // $("selectCategory").value = selectCategory;
             // $("shortCode").value = shortCode;
             // $("workTitle").value = workTitle;
