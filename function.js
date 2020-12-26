@@ -307,16 +307,25 @@ categoryCollection.onSnapshot(function(querySnapshot) {
 /****************************Fill Work Table****************************/
 
 const workDisplay = document.getElementById('workDisplay');
-// workCollection.onSnapshot(function(querySnapshot) {
-//     if(document.getElementById("workDisplay") != null){
-//         querySnapshot.docChanges().forEach(function(change,i){
-//             if(change.type === "added"){
-//                 document.getElementById("workDisplay").innerHTML +="<tr><td>"+change.doc.data().selectCategory+"</td><td>"+change.doc.data().workTitle+"</td><td>"
-//                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().timeRequired+"</td><td>"+change.doc.data().skillsRequired+"</td></tr>"
-//             }
-//         });
-//     }
-// });
+workCollection.onSnapshot(function(querySnapshot) {
+     if(document.getElementById("workDisplay") != null){
+         querySnapshot.docChanges().forEach(function(change,i){
+             if(change.type === "added"){
+                 document.getElementById("workDisplay").innerHTML +="<tr class='custom-clickable-row' data-href='add-work-edit.html'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().ToolsRequired+"</td></tr>"
+             }
+         });
+     }
+ });
+
+ $(document).on('click', '.custom-clickable-row', function(e){
+	var url = $(this).data('href');
+
+	window.location = url;
+});
+
+/*
+let postsArray = [];
 
 var dataSet = new Array();
 var i=1;
@@ -338,9 +347,20 @@ database.collection("Work").get().then(function(querySnapshot) {
                             { title: "Tools Required" }
                     ]
                 
-            }).on('click', data, function () {
-                
-                alert( 'You clicked on a row' );
-            } );;
-                
+            })
+            .on('click', data, function () {
+                window.location.href = "add-work-edit.html";
+                //alert( 'You clicked on a row' );
+            } );
+               
 });
+*/ 
+
+//pagination
+const getWorkIdFromURL = () => {
+    let workLocation = window.location.href;
+    let hrefArray = workLocation.split("/");
+    let workId = hrefArray.slice(-1).pop();
+    
+    return workId;
+}
