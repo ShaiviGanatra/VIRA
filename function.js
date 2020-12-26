@@ -24,6 +24,8 @@ const workCollection = database.collection('Work')
 
 if(addworkform != null){
     let d;
+    if(publish)
+    {
     publish.addEventListener("click" , async(e) =>
     {
         e.preventDefault();
@@ -59,6 +61,8 @@ if(addworkform != null){
             alert('Must fill all the Mandatory (* marked) Inputs');
         }
     })
+}
+    if(saveDraft){
     saveDraft.addEventListener("click" , async(e) =>
     {
         e.preventDefault();
@@ -94,6 +98,7 @@ if(addworkform != null){
             alert("Must fill all the Mandatory Inputs : Category, Work Title, Work Description")
         }
     })
+}
 }
 
 /****************************Add Category****************************/
@@ -319,10 +324,39 @@ workCollection.onSnapshot(function(querySnapshot) {
  });
 
  $(document).on('click', '.custom-clickable-row', function(e){
-	var url = $(this).data('href');
-
-	window.location = url;
+    var url = $(this).data('href');
+    var rowId =  
+                e.target.parentNode.parentNode.id; 
+              //this gives id of tr whose button was clicked 
+                var data = document.getElementById(rowId).getElementsByTagName("td");  
+              /*returns array of all elements with  
+              "row-data" class within the row with given id*/ 
+  
+                var Worktitle = data[0].innerHTML; 
+                var Category = data[1].innerHTML; 
+                var WorkDescription = data[2].innerHTML;
+                var skillsReq = data[3].innerHTML;
+                var ToolsReq = data[4].innerHTML;
+  
+                alert("Worktitle: " + Worktitle + "\nCategory: " + Category+"\nWorkDescription: " +
+                WorkDescription+ "\nskillsReq: " + skillsReq+"\nToolsReq: " + ToolsReq); 
+    window.location = url;
 });
+/* (----------------to retrieve the contents of a single document using get():------------------------)
+var docRef = db.collection("Work").doc("SF");
+
+docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+*/
+
 
 /*
 let postsArray = [];
