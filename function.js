@@ -306,7 +306,7 @@ categoryCollection.onSnapshot(function(querySnapshot) {
 
 /****************************Fill Work Table****************************/
 
-const workDisplay = document.getElementById('workDisplay');
+// const workDisplay = document.getElementById('workDisplay');
 // workCollection.onSnapshot(function(querySnapshot) {
 //     if(document.getElementById("workDisplay") != null){
 //         querySnapshot.docChanges().forEach(function(change,i){
@@ -318,29 +318,42 @@ const workDisplay = document.getElementById('workDisplay');
 //     }
 // });
 
-var dataSet = new Array();
-var i=1;
-database.collection("Work").get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
+// var dataSet = new Array();
+// var i=1;
+// database.collection("Work").get().then(function(querySnapshot) {
+//     querySnapshot.forEach(function(doc) {
 
-        dataSet.push([doc.data().workTitle, doc.data().selectCategory,doc.data().workDescription,doc.data().skillsRequired,doc.data().toolsRequired]);
-        i=i+1;
+//         dataSet.push([doc.data().workTitle, doc.data().selectCategory,doc.data().workDescription,doc.data().skillsRequired,doc.data().toolsRequired]);
+//         i=i+1;
 
-    });
-    let data 
-    $('#workDisplay').DataTable( {
-                    data : dataSet,
-                    columns: [
-                            { title: "Work Title" },
-                            { title: "Category" },
-                            { title: "Work Description" },
-                            { title: "Skills Required" },
-                            { title: "Tools Required" }
-                    ]
-                
-            }).on('click', data, function () {
-                
-                alert( 'You clicked on a row' );
-            } );;
-                
+//     });
+//     let data 
+//     $('#workDisplay').DataTable( {
+//                     data : dataSet,
+//                     columns: [
+//                             { title: "Work Title" },
+//                             { title: "Category" },
+//                             { title: "Work Description" },
+//                             { title: "Skills Required" },
+//                             { title: "Tools Required" }
+//                     ]  
+//             })  
+// });
+
+const workDisplay = document.getElementById('datatable-buttons');
+workCollection.onSnapshot(function(querySnapshot) {
+     if(document.getElementById("workDisplay") != null){
+         querySnapshot.docChanges().forEach(function(change,i){
+             if(change.type === "added"){
+                 document.getElementById("workDisplay").innerHTML +="<tr class='custom-clickable-row' data-href='add-work-edit.html'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().ToolsRequired+"</td></tr>"
+             }
+         });
+     }
+ });
+
+ $(document).on('click', '.custom-clickable-row', function(e){
+	var url = $(this).data('href');
+
+	window.location = url;
 });
