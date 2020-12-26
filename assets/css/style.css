@@ -8344,5 +8344,8 @@ tr:first-child > td > .fc-day-grid-event {
   color:white;
   text-decoration:none;
   }
+  .custom-clickable-row {
+	cursor: pointer;
+}
     
 /*# sourceMappingURL=style.css.map */

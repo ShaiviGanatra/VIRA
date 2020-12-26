@@ -306,41 +306,7 @@ categoryCollection.onSnapshot(function(querySnapshot) {
 
 /****************************Fill Work Table****************************/
 
-// const workDisplay = document.getElementById('workDisplay');
-// workCollection.onSnapshot(function(querySnapshot) {
-//     if(document.getElementById("workDisplay") != null){
-//         querySnapshot.docChanges().forEach(function(change,i){
-//             if(change.type === "added"){
-//                 document.getElementById("workDisplay").innerHTML +="<tr><td>"+change.doc.data().selectCategory+"</td><td>"+change.doc.data().workTitle+"</td><td>"
-//                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().timeRequired+"</td><td>"+change.doc.data().skillsRequired+"</td></tr>"
-//             }
-//         });
-//     }
-// });
-
-// var dataSet = new Array();
-// var i=1;
-// database.collection("Work").get().then(function(querySnapshot) {
-//     querySnapshot.forEach(function(doc) {
-
-//         dataSet.push([doc.data().workTitle, doc.data().selectCategory,doc.data().workDescription,doc.data().skillsRequired,doc.data().toolsRequired]);
-//         i=i+1;
-
-//     });
-//     let data 
-//     $('#workDisplay').DataTable( {
-//                     data : dataSet,
-//                     columns: [
-//                             { title: "Work Title" },
-//                             { title: "Category" },
-//                             { title: "Work Description" },
-//                             { title: "Skills Required" },
-//                             { title: "Tools Required" }
-//                     ]  
-//             })  
-// });
-
-const workDisplay = document.getElementById('datatable-buttons');
+const workDisplay = document.getElementById('workDisplay');
 workCollection.onSnapshot(function(querySnapshot) {
      if(document.getElementById("workDisplay") != null){
          querySnapshot.docChanges().forEach(function(change,i){
@@ -357,3 +323,44 @@ workCollection.onSnapshot(function(querySnapshot) {
 
 	window.location = url;
 });
+
+/*
+let postsArray = [];
+
+var dataSet = new Array();
+var i=1;
+database.collection("Work").get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+
+        dataSet.push([doc.data().workTitle, doc.data().selectCategory,doc.data().workDescription,doc.data().skillsRequired,doc.data().toolsRequired]);
+        i=i+1;
+
+    });
+    let data 
+    $('#workDisplay').DataTable( {
+                    data : dataSet,
+                    columns: [
+                            { title: "Work Title" },
+                            { title: "Category" },
+                            { title: "Work Description" },
+                            { title: "Skills Required" },
+                            { title: "Tools Required" }
+                    ]
+                
+            })
+            .on('click', data, function () {
+                window.location.href = "add-work-edit.html";
+                //alert( 'You clicked on a row' );
+            } );
+               
+});
+*/ 
+
+//pagination
+const getWorkIdFromURL = () => {
+    let workLocation = window.location.href;
+    let hrefArray = workLocation.split("/");
+    let workId = hrefArray.slice(-1).pop();
+    
+    return workId;
+}
