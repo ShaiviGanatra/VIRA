@@ -7,7 +7,7 @@ let workDescription = document.getElementById('workDescription');
 let longDescription = document.getElementById('longDescription');
 let startDate = document.getElementById('startDate');
 let endDate = document.getElementById('endDate');
-let timeRequired = document.getElementById('timeRequired');
+let numDays = document.getElementById('numDays');
 let skillsRequired = document.getElementById('skillsRequired');
 let toolsRequired = document.getElementById('toolsRequired');
 let clientQuestions = document.getElementById('clientQuestions');
@@ -32,7 +32,7 @@ if(addworkform != null){
     {
         e.preventDefault();
         if(selectCategory.value != "" && shortCode.value != "" && workTitle.value != "" && workDescription.value != ""
-        && longDescription.value != "" && startDate.value != "" && endDate.value != "" && skillsRequired.value != "" && toolsRequired.value != "")
+        && longDescription.value != "" && startDate.value != "" && endDate.value != "" && numDays.value != "" && skillsRequired.value != "" && toolsRequired.value != "")
         {
             workCollection.add({
                 selectCategory: selectCategory.value,
@@ -42,7 +42,7 @@ if(addworkform != null){
                 longDescription: longDescription.value,
                 startDate: startDate.value,
                 endDate: endDate.value,
-                timeRequired: timeRequired.value,
+                numDays: numDays.value,
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -81,7 +81,7 @@ if(addworkform != null){
                 longDescription: longDescription.value,
                 startDate: startDate.value,
                 endDate: endDate.value,
-                timeRequired: timeRequired.value,
+                numDays: numDays.value,
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -363,7 +363,7 @@ var tbody = document.getElementsByTagName("tbody")[0];
             longDescription = doc.data().longDescription;
             startDate = doc.data().startDate;
             endDate = doc.data().endDate;
-            timeRequired = doc.data().timeRequired;
+            numDays = doc.data().numDays;
             skillsRequired = doc.data().skillsRequired;
             toolsRequired = doc.data().toolsRequired;
             clientQuestions = doc.data().clientQuestions;
@@ -426,4 +426,17 @@ const getWorkIdFromURL = () => {
     let workId = hrefArray.slice(-1).pop();
     
     return workId;
+}
+/****************************Calculation of Number of Days****************************/
+
+function GetDays(){
+    var startDt = new Date(document.getElementById("startDate").value);
+    var endDt = new Date(document.getElementById("endDate").value);
+    return parseInt((endDt - startDt) / (24 * 3600 * 1000));
+}
+
+function cal(){
+if(document.getElementById("startDate")){
+document.getElementById("numDays").value=GetDays() + " days";
+} 
 }
