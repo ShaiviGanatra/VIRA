@@ -5,8 +5,9 @@ let shortCode = document.getElementById('shortCode');
 let workTitle = document.getElementById('workTitle');
 let workDescription = document.getElementById('workDescription');
 let longDescription = document.getElementById('longDescription');
-const startDate = document.getElementById('startDate');
-const endDate = document.getElementById('endDate');
+let startDate = document.getElementById('startDate');
+let endDate = document.getElementById('endDate');
+let timeRequired = document.getElementById('timeRequired');
 let skillsRequired = document.getElementById('skillsRequired');
 let toolsRequired = document.getElementById('toolsRequired');
 let clientQuestions = document.getElementById('clientQuestions');
@@ -41,6 +42,7 @@ if(addworkform != null){
                 longDescription: longDescription.value,
                 startDate: startDate.value,
                 endDate: endDate.value,
+                timeRequired: timeRequired.value,
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -79,6 +81,7 @@ if(addworkform != null){
                 longDescription: longDescription.value,
                 startDate: startDate.value,
                 endDate: endDate.value,
+                timeRequired: timeRequired.value,
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -358,6 +361,8 @@ var tbody = document.getElementsByTagName("tbody")[0];
             workTitle = doc.data().workTitle;
             workDescription = doc.data().workDescription;
             longDescription = doc.data().longDescription;
+            startDate = doc.data().startDate;
+            endDate = doc.data().endDate;
             timeRequired = doc.data().timeRequired;
             skillsRequired = doc.data().skillsRequired;
             toolsRequired = doc.data().toolsRequired;
