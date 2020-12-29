@@ -337,7 +337,15 @@ function GetDays(){
 function cal(){
     if(document.getElementById("startDate")){
         document.getElementById("numDays").value=GetDays() + " days";
-    } 
+    }
+    if(GetDays() < 0)
+    {   
+        alert("Date cannot be negative. Enter a proper date.");
+    }
+    else if(GetDays() == 0)
+    {
+        alert("Are you sure about the time required? Check and update.");
+    }
 }
 
 /*****************************Recently Added Ordered List**********************************/
