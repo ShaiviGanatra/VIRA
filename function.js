@@ -24,6 +24,8 @@ var saveDraft = document.querySelector("#saveDraft");
 var database = firebase.firestore();
 var workCollection = database.collection('Work');
 
+var now     = new Date(); 
+
 if(addworkform != null){
     // let d;
     if(publish)
@@ -51,7 +53,8 @@ if(addworkform != null){
                 workFolder: workFolder.value,
                 workWikipedia: workWikipedia.value,
                 relatedWork: relatedWork.value,
-                status: 1
+                status: 1,
+                createdAt: now
             })
             .then(() => { window.location.href = "work.html";
                 console.log('Work Inserted Succesfully');
@@ -90,7 +93,8 @@ if(addworkform != null){
                 workFolder: workFolder.value,
                 workWikipedia: workWikipedia.value,
                 relatedWork: relatedWork.value,
-                status: 2
+                status: 2,
+                createdAt: now
         
             })
             .then(() => { window.location.href = "work.html";
@@ -332,6 +336,25 @@ function GetDays(){
 
 function cal(){
     if(document.getElementById("startDate")){
-    document.getElementById("numDays").value=GetDays() + " days";
+        document.getElementById("numDays").value=GetDays() + " days";
     } 
 }
+
+/*****************************Recently Added Ordered List**********************************/
+const recentlyAdded = document.getElementById('recentlyAdded');
+var query = workCollection.where("status", "==", 1).orderBy("createdAt","desc");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("recentlyAdded") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.createElement("createdAt").innerHTML = now;
+                document.getElementById("recentlyAdded").innerHTML += "<h5 id='ScrollyHome'>"+change.doc.data().workTitle+
+                "</h5><p class='text-muted'>"+change.doc.data().workDescription+"</p><p class='text-muted'>"+change.doc.data().longDescription+"</p><p>Created at : "+change.doc.data().createdAt.toDate()+"</p>"
+                
+                
+            }
+        });
+       
+    }    
+});
