@@ -338,7 +338,15 @@ function GetDays(){
 function cal(){
     if(document.getElementById("startDate")){
         document.getElementById("numDays").value=GetDays() + " days";
-    } 
+    }
+    if(GetDays() < 0)
+    {   
+        alert("Date cannot be negative. Enter a proper date.");
+    }
+    else if(GetDays() == 0)
+    {
+        alert("Are you sure about the time required? Check and update.");
+    }
 }
 
 /*****************************Recently Added Ordered List**********************************/
@@ -350,12 +358,33 @@ query.onSnapshot(function(querySnapshot) {
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
                 document.createElement("createdAt").innerHTML = now;
-                document.getElementById("recentlyAdded").innerHTML += "<h5 id='ScrollyHome'>"+change.doc.data().workTitle+
-                "</h5><p class='text-muted'>"+change.doc.data().workDescription+"</p><p class='text-muted'>"+change.doc.data().longDescription+"</p><p>Created at : "+change.doc.data().createdAt.toDate()+"</p>"
+                document.getElementById("recentlyAdded").innerHTML += "<div><h5 id='ScrollyHome' class='custom-clickable-row '>"+change.doc.data().workTitle+
+                "</h5><p class='text-muted'>Created at :"+change.doc.data().createdAt.toDate()+"</p></div>"
                 
                 
             }
         });
        
     }    
+});
+
+$(document).on('click', '.custom-clickable-row', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentName;
+    }
+     if (target) {
+    alert("Hi")
+    var data = target.getElementsByTagName("h5");
+    //storing workTitle to local storage
+    localStorage.setItem("workTitle",data[0].innerHTML);
+    
+    }
+   
+    //redirecting to add-work-edit
+    window.location.href = "add-work-edit.html";
 });
