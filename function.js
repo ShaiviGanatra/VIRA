@@ -176,6 +176,7 @@ categoryCollection.onSnapshot(function(querySnapshot) {
 });
 
 /****************************Fill Work Table****************************/
+
 // database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
 var workDisplay = document.getElementById('workDisplay');
 workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
