@@ -5,9 +5,7 @@ var shortCode = document.getElementById('shortCode');
 var workTitle = document.getElementById('workTitle');
 var workDescription = document.getElementById('workDescription');
 var longDescription = document.getElementById('longDescription');
-var startDate = document.getElementById('startDate');
-var endDate = document.getElementById('endDate');
-var numDays = document.getElementById('numDays');
+var timeRequired = document.getElementById('timeRequired');
 var skillsRequired = document.getElementById('skillsRequired');
 var toolsRequired = document.getElementById('toolsRequired');
 var clientQuestions = document.getElementById('clientQuestions');
@@ -34,7 +32,7 @@ if(addworkform != null){
     {
         e.preventDefault();
         if(selectCategory.value != "" && shortCode.value != "" && workTitle.value != "" && workDescription.value != ""
-        && longDescription.value != "" && startDate.value != "" && endDate.value != "" && numDays.value != "" && skillsRequired.value != "" && toolsRequired.value != "")
+        && longDescription.value != "" && parseInt(timeRequired.value) != "" && skillsRequired.value != "" && toolsRequired.value != "")
         {
             workCollection.add({
                 selectCategory: selectCategory.value,
@@ -42,9 +40,7 @@ if(addworkform != null){
                 workTitle: workTitle.value,
                 workDescription: workDescription.value,
                 longDescription: longDescription.value,
-                startDate: startDate.value,
-                endDate: endDate.value,
-                numDays: numDays.value,
+                timeRequired: parseInt(timeRequired.value),
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -82,9 +78,7 @@ if(addworkform != null){
                 workTitle: workTitle.value,
                 workDescription: workDescription.value,
                 longDescription: longDescription.value,
-                startDate: startDate.value,
-                endDate: endDate.value,
-                numDays: numDays.value,
+                timeRequired: parseInt(timeRequired.value),
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -235,9 +229,6 @@ function fillAddWorkEdit() {
             $("#workTitle").val(doc.data().workTitle);
             $("#workDescription").val(doc.data().workDescription);
             $("#longDescription").val(doc.data().longDescription);
-            $("#startDate").val(doc.data().startDate);
-            $("#endDate").val(doc.data().endDate);
-            $("#numDays").val(doc.data().numDays);
             $("#timeRequired").val(doc.data().timeRequired);
             $("#skillsRequired").val(doc.data().skillsRequired);
             $("#toolsRequired").val(doc.data().toolsRequired);
@@ -272,9 +263,7 @@ $("#saveChangesWork").on("click", function() {
         "workTitle": workTitle.value,
         "workDescription": workDescription.value,
         "longDescription": longDescription.value,
-        "startDate": startDate.value,
-        "endDate": endDate.value,
-        "numDays": numDays.value,
+        "timeRequired": timeRequired.value,
         "skillsRequired": skillsRequired.value,
         "toolsRequired": toolsRequired.value,
         "clientQuestions": clientQuestions.value,
@@ -326,27 +315,6 @@ var getWorkIdFromURL = () => {
     let workId = hrefArray.slice(-1).pop();
     
     return workId;
-}
-/****************************Calculation of Number of Days****************************/
-
-function GetDays(){
-    var startDt = new Date(document.getElementById("startDate").value);
-    var endDt = new Date(document.getElementById("endDate").value);
-    return parseInt((endDt - startDt) / (24 * 3600 * 1000));
-}
-
-function cal(){
-    if(document.getElementById("startDate")){
-        document.getElementById("numDays").value=GetDays() + " days";
-    }
-    if(GetDays() < 0)
-    {   
-        alert("Date cannot be negative. Enter a proper date.");
-    }
-    else if(GetDays() == 0)
-    {
-        alert("Are you sure about the time required? Check and update.");
-    }
 }
 
 /*****************************Recently Added Ordered List**********************************/
