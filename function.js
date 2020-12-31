@@ -146,7 +146,7 @@ categoryCollection.onSnapshot(function(querySnapshot) {
         // doc.data() is never undefined for query doc snapshots
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
-                document.getElementById("categoryDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='card-body'><h4>" + change.doc.data().categoryName + 
+                document.getElementById("categoryDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='category-card card-body'><h4>" + change.doc.data().categoryName + 
                 "</h4><p>" +change.doc.data().categoryShortname+"</p><p class='card-text text-muted'>" 
                 +change.doc.data().categoryDescription +"</p></div></div>"
                 if(i!=0 && i%2 == 0){
@@ -183,7 +183,7 @@ workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
      if(document.getElementById("workDisplay") != null){
          querySnapshot.docChanges().forEach(function(change,i){
              if(change.type === "added"){
-                 document.getElementById("workDisplay").innerHTML +="<tr class='custom-clickable-row' data-href='add-work-edit.html'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+                 document.getElementById("workDisplay").innerHTML +="<tr class='custom-clickable-row'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
                  +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
              }
          });
@@ -350,41 +350,95 @@ function cal(){
 }
 
 /*****************************Recently Added Ordered List**********************************/
+
 const recentlyAdded = document.getElementById('recentlyAdded');
 var query = workCollection.where("status", "==", 1).orderBy("createdAt","desc");
 query.onSnapshot(function(querySnapshot) {
     if(document.getElementById("recentlyAdded") != null){
         // doc.data() is never undefined for query doc snapshots
         querySnapshot.docChanges().forEach(function(change,i){
-            if(change.type === "added"){
-                document.createElement("createdAt").innerHTML = now;
-                document.getElementById("recentlyAdded").innerHTML += "<div><h5 id='ScrollyHome' class='custom-clickable-row '>"+change.doc.data().workTitle+
-                "</h5><p class='text-muted'>Created at :"+change.doc.data().createdAt.toDate()+"</p></div>"
-                
-                
-            }
+            try{
+                if(change.type === "added"){
+                    document.createElement("createdAt").innerHTML = now;
+                    document.getElementById("recentlyAdded").innerHTML += "<div class='custom-clickable-h5'><h5>"+change.doc.data().workTitle+
+                    "</h5><p class='text-muted'>Created at: "+change.doc.data().createdAt.toDate()+"</p></div><hr>" 
+                }
+            }catch(err){}
         });
        
     }    
 });
 
-$(document).on('click', '.custom-clickable-row', function(e){
+/*****************************Click on Recently Added WorkTitle**********************************/
+
+$(document).on('click', '.custom-clickable-h5', function(e){
     // var url = $(this).data('href');
     e = e || window.event;
 
     var target = e.srcElement || e.target;
-    
     while (target && target.nodeName !== "DIV") {
-        target = target.parentName;
+        target = target.parentNode;
     }
-     if (target) {
-    alert("Hi")
-    var data = target.getElementsByTagName("h5");
-    //storing workTitle to local storage
-    localStorage.setItem("workTitle",data[0].innerHTML);
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
     
-    }
-   
     //redirecting to add-work-edit
     window.location.href = "add-work-edit.html";
 });
+
+/*****************************Search/Filter on Work Table**********************************/
+
+$(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#workDisplay tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+/*****************************Category Click -> Fitered Work wrt Category**********************************/
+
+$(document).on('click', '.category-card', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h4");
+
+        //storing workTitle to local storage
+        localStorage.setItem("categoryName", cells[0].innerHTML);
+    }
+    
+    //redirecting to work.html
+    window.location.href = "work.html";
+
+    // $("#searchWorkInput").val(localStorage.getItem("categoryName"));
+
+});
+
+function searchWork(){
+    // alert("IM CALLED");
+    
+    $("#searchWorkInput").val(localStorage.getItem("categoryName"));
+    $("#searchWorkInput").focus().val(localStorage.getItem("categoryName")).trigger(enterKey());
+    // $("#searchWorkInput").submit()
+    // jQuery.Event("keydown").key = 'Enter';
+    // $("#searchWorkInput").trigger("focus");
+    // document.getElementById("searchWorkInput").click();
+    localStorage.removeItem("categoryName");
+}
+
+function enterKey() {
+
+    return $.Event( "keypress", { which: 13 } );
+
+ }

@@ -8344,10 +8344,16 @@ tr:first-child > td > .fc-day-grid-event {
   color:white;
   text-decoration:none;
   }
+  
   .custom-clickable-row {
 	cursor: pointer;
 }
-
+.custom-clickable-h5{
+  cursor: pointer;
+}
+.category-card{
+  cursor: pointer;
+}
 /*=================work table====================*/
 th{
   color:white;
