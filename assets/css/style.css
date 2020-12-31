@@ -8354,6 +8354,9 @@ tr:first-child > td > .fc-day-grid-event {
 .category-card{
   cursor: pointer;
 }
+.custom-clickable-mylist-h5{
+  cursor: pointer;
+}
 /*=================work table====================*/
 th{
   color:white;
