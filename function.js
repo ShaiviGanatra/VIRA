@@ -25,7 +25,6 @@ var workCollection = database.collection('Work');
 var now     = new Date(); 
 
 if(addworkform != null){
-    // let d;
     if(publish)
     {
     publish.addEventListener("click" , async(e) =>
@@ -166,13 +165,13 @@ categoryCollection.onSnapshot(function(querySnapshot) {
                 document.getElementById("selectCategory").innerHTML += "<option>" + change.doc.data().categoryName + "</option>"
             }
         });
-    }    
+    }
 });
 
 /****************************Fill Work Table****************************/
 
 // database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
-var workDisplay = document.getElementById('workDisplay');
+// var workDisplay = document.getElementById('workDisplay');
 workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
      if(document.getElementById("workDisplay") != null){
          querySnapshot.docChanges().forEach(function(change,i){
@@ -317,9 +316,9 @@ var getWorkIdFromURL = () => {
     return workId;
 }
 
-/*****************************Recently Added Ordered List**********************************/
+/*****************************Recently Added on Dashboard**********************************/
 
-const recentlyAdded = document.getElementById('recentlyAdded');
+// var recentlyAdded = document.getElementById('recentlyAdded');
 var query = workCollection.where("status", "==", 1).orderBy("createdAt","desc");
 query.onSnapshot(function(querySnapshot) {
     if(document.getElementById("recentlyAdded") != null){
@@ -333,7 +332,6 @@ query.onSnapshot(function(querySnapshot) {
                 }
             }catch(err){}
         });
-       
     }    
 });
 
@@ -372,7 +370,7 @@ $(document).ready(function(){
 /*****************************Category Click -> Fitered Work wrt Category**********************************/
 
 $(document).on('click', '.category-card', function(e){
-    // var url = $(this).data('href');
+    
     e = e || window.event;
 
     var target = e.srcElement || e.target;
@@ -385,28 +383,61 @@ $(document).on('click', '.category-card', function(e){
         //storing workTitle to local storage
         localStorage.setItem("categoryName", cells[0].innerHTML);
     }
-    
+
     //redirecting to work.html
     window.location.href = "work.html";
 
-    // $("#searchWorkInput").val(localStorage.getItem("categoryName"));
-
 });
 
+/*****************************Search Work Function on Work**********************************/
+
 function searchWork(){
-    // alert("IM CALLED");
-    
     $("#searchWorkInput").val(localStorage.getItem("categoryName"));
-    $("#searchWorkInput").focus().val(localStorage.getItem("categoryName")).trigger(enterKey());
-    // $("#searchWorkInput").submit()
-    // jQuery.Event("keydown").key = 'Enter';
-    // $("#searchWorkInput").trigger("focus");
-    // document.getElementById("searchWorkInput").click();
+    // $("#searchWorkInput").focus().val(localStorage.getItem("categoryName")).trigger(enterKey());
     localStorage.removeItem("categoryName");
 }
 
-function enterKey() {
+/****************************Fill My List Table****************************/
 
-    return $.Event( "keypress", { which: 13 } );
+// database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
+// var mylistworkDisplay = document.getElementById('workDisplay');
+workCollection.where("status", "==", 2).onSnapshot(function(querySnapshot) {
+     if(document.getElementById("mylistworkDisplay") != null){
+         querySnapshot.docChanges().forEach(function(change,i){
+             if(change.type === "added"){
+                 document.getElementById("mylistworkDisplay").innerHTML +="<tr class='custom-clickable-row'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
+             }
+         });
+     }
+ });
 
- }
+/*****************************Search/Filter on My List Table**********************************/
+
+$(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#mylistworkDisplay tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+/*****************************My List on Dashboard**********************************/
+
+// var recentlyAdded = document.getElementById('recentlyAdded');
+query = workCollection.where("status", "==", 2).orderBy("createdAt","desc");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("mylistdashboard") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    document.createElement("createdAt").innerHTML = now;
+                    document.getElementById("mylistdashboard").innerHTML += "<div class='custom-clickable-h5'><h5>"+change.doc.data().workTitle+
+                    "</h5><p class='text-muted'>Created at: "+change.doc.data().createdAt.toDate()+"</p></div><hr>" 
+                }
+            }catch(err){}
+        });
+    }    
+});
