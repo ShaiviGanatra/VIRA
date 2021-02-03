@@ -452,7 +452,7 @@ query.onSnapshot(function(querySnapshot) {
 firebase.auth().onAuthStateChanged(user => {
     if(user)
     {
-        window.alert("Logged In Successfully !");
+        //window.alert("Logged In Successfully !");
         setupUI(user)
         console.log('User logged in: ',user)
     }
