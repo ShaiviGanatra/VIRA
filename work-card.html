@@ -41,12 +41,40 @@
                            <li class="nav-item">
                            <a class="nav-link" href="work.html">Works</a>
                            </li>
+                           <li class="nav-item">
+                            <a href="#custom-modal" class="nav-link" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#38414a">User</a>
+                          </li>
+                        <li class="dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                                aria-haspopup="false" aria-expanded="false">
+                                
+                                <img src="assets/images/users/user-1.jpg" alt="profile-user" class="rounded-circle" /> 
+                                <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
+                                <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
+                                <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a>
+                                <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" onclick ="logout()"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
+                            </div>
+                        </li>
                            </ul>
                            
                        </div>
                      </nav>
                    <!-- end navbar-->
                </div>
+               <div id="custom-modal" class="modal-demo">
+                <button type="button" class="close" onclick="Custombox.modal.close();">
+                    <span>&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="custom-modal-title">User Details</h4>
+                <div class="custom-modal-text">
+                   
+                </div>
+            </div> 
                <!-- Top Bar End -->
                <div class="page-wrapper-img">
                </div><!--end page-wrapper-img-->
@@ -222,15 +250,30 @@
         <script src="assets/js/bootstrap.bundle.min.js"></script>
         <script src="assets/js/waves.min.js"></script>
         <script src="assets/js/jquery.slimscroll.min.js"></script>
+        <script src="assets/plugins/custombox/custombox.min.js"></script>
+        <script src="assets/plugins/custombox/custombox.legacy.min.js"></script>
+        <script src="assets/pages/jquery.modal-animation.js"></script>
+
+        <script src="assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+        <script src="assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+        <script src="assets/plugins/moment/moment.js"></script>
+        <script src="assets/plugins/apexcharts/apexcharts.min.js"></script>
+        <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>
+        <script src="https://apexcharts.com/samples/assets/series1000.js"></script>
+        <script src="https://apexcharts.com/samples/assets/ohlc.js"></script>
+        <script src="assets/pages/jquery.dashboard.init.js"></script>
 
         <!-- App js -->
         <script src="assets/js/app.js"></script>
-
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
-        
+        <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+
         <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyDmbhoJ3ueIYrZYWe5KzGiLOMLnd5-7V68",
