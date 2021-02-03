@@ -1,3 +1,4 @@
+
 /****************************Add Work****************************/ 
 
 var selectCategory = document.getElementById('selectCategory');
@@ -441,3 +442,82 @@ query.onSnapshot(function(querySnapshot) {
         });
     }    
 });
+
+
+
+/*******************************Login Credentials*************************************************/
+
+//listen for auth status changes
+
+firebase.auth().onAuthStateChanged(user => {
+    if(user)
+    {
+        window.alert("Logged In Successfully !");
+        setupUI(user)
+        console.log('User logged in: ',user)
+    }
+    else
+    {
+        console.log('User logged out: ',user)
+    }
+       
+  });
+  
+
+  
+//function login(){
+
+const loginForm = document.querySelector('#loginf');
+if(document.getElementById("loginf"))
+{
+loginForm.addEventListener('click',(e)=>{
+    e.preventDefault();
+    var email = document.getElementById('email_field').value;
+    var password = document.getElementById('password_field').value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(cred =>{
+        
+        console.log(cred.user)
+        var user = firebase.auth().currentUser;
+       // if (user) {
+        // User is signed in.
+        
+      //  window.alert("Logged In Successfully !");
+        window.location.href = "index.html";
+        //} else {
+        // No user is signed in.
+        // window.location.href = "login.html"
+       // }
+    })
+    .catch(function(error){
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ..
+        window.alert("Error : "+errorCode+" "+errorMessage);
+      })
+})
+}
+    
+//}
+const userDetails = document.querySelector('.custom-modal-text');
+const setupUI =(user) =>{
+    if(user){
+        const html = `
+            <div>Logged in as ${user.email}</div>
+        `;
+        userDetails.innerHTML = html;
+    }
+}
+
+//logout
+function logout(){
+    firebase.auth().signOut().then(() => {
+       // window.alert("User Logged Out Successfully !");
+        window.location.href = "login.html";
+        // Sign-out successful.
+      }).catch((error) => {
+        // An error happened.
+      });
+   
+}
+
