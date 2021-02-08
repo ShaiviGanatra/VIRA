@@ -124,7 +124,7 @@ if(document.getElementById("submitCategory")){
         categoryShortname: categoryShortname.value,
         categoryDescription: categoryDescription.value
     })
-    .then(() => { window.location.href = "category.html";
+    .then(() => { window.location.href = "directory.html";
         console.log('Category Inserted Succesfully');})
     .catch(error => {console.error(error)});
 });
@@ -483,7 +483,7 @@ loginForm.addEventListener('click',(e)=>{
         // User is signed in.
         
       //  window.alert("Logged In Successfully !");
-        window.location.href = "index.html";
+        window.location.href = "dashboard.html";
         //} else {
         // No user is signed in.
         // window.location.href = "login.html"
@@ -513,7 +513,7 @@ const setupUI =(user) =>{
 function logout(){
     firebase.auth().signOut().then(() => {
        // window.alert("User Logged Out Successfully !");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         // Sign-out successful.
       }).catch((error) => {
         // An error happened.

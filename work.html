@@ -28,57 +28,58 @@
     </head>
     <body onload="searchWork()">
 
-        <!-- Top Bar Start -->
-        <div class="topbar">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-custom">
-               <a href="index.html" class="logo">
-                   <span>
-                       <h1 class="logo-lg">VIRA</h1>
-                   </span>
-               </a>
-             
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                 <ul class="navbar-nav ml-auto">
-                   <li class="nav-item">
-                       <a class="nav-link" href="index.html">Home</a>
-                     </li>
-                   <li class="nav-item">
-                     <a class="nav-link" href="my-list.html">My List</a>
-                   </li>
-                   <li class="nav-item">
-                       <a class="nav-link" href="category.html">Category</a>
-                     </li>
-                   <li class="nav-item">
-                   <a class="nav-link" href="work.html">Works</a>
-                   </li>
-                   <li class="nav-item">
-                    <a class="nav-link" href="broadcast.html">Broadcast</a>
-                   </li>
-                   <li class="nav-item">
-                    <a href="#custom-modal" class="nav-link" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#38414a">User</a>
-                  </li>
-                <li class="dropdown">
-                    <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="false" aria-expanded="false">
-                        
-                        <img src="assets/images/users/user-1.jpg" alt="profile-user" class="rounded-circle" /> 
-                        <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
-                        <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a>
-                        <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" onclick ="logout()"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
-                    </div>
-                </li>
-                   </ul>
+                <!-- Top Bar Start -->
+                <div class="topbar">
+                    <!-- Navbar -->
+                    <nav class="navbar navbar-expand-lg navbar-custom">
+                       <a href="dashboard.html" class="logo">
+                           <span>
+                               <h1 class="logo-lg">VIRA</h1>
+                           </span>
+                       </a>
+                     
+                       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                         <ul class="navbar-nav ml-auto">
+                           <li class="nav-item">
+                               <a class="nav-link" href="dashboard.html" class="mr-5">Dashboard</a>
+                             </li>
+                           <li class="nav-item">
+                               <a class="nav-link" href="broadcast.html">Broadcast</a>
+                           </li>  
+                           <li class="nav-item">
+                             <a class="nav-link" href="my-work.html">My Work</a>
+                           </li>
+                           <!-- <li class="nav-item">
+                               <a class="nav-link" href="category.html">Category</a>
+                             </li> -->
+                           <li class="nav-item">
+                           <a class="nav-link" href="directory.html">Directory</a>
+                           </li>
+                           
+                           <li class="nav-item">
+                               <a href="#custom-modal" class="nav-link" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#38414a">User</a>
+                             </li>
+                           <li class="dropdown">
+                               <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                   
+                                   <img src="assets/images/users/user-1.jpg" alt="profile-user" class="rounded-circle" /> 
+                                   <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
+                               </a>
+                               <div class="dropdown-menu dropdown-menu-right">
+                                   <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
+                                   <!-- <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
+                                   <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> -->
+                                   <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                   <div class="dropdown-divider"></div>
+                                   <a class="dropdown-item" href="#" onclick ="logout()"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
+                               </div>
+                           </li>
+                           </ul>
+                       </div>
+                     </nav>
+                   <!-- end navbar-->
                </div>
-             </nav>
-           <!-- end navbar-->
-       </div>
        <div id="custom-modal" class="modal-demo">
         <button type="button" class="close" onclick="Custombox.modal.close();">
             <span>&times;</span><span class="sr-only">Close</span>
@@ -103,10 +104,10 @@
                            <!-- Navigation Menu-->
                            <ul class="navigation-menu list-unstyled">
                                <li>
-                                   <a href="index.html">
-                                       <i class="mdi mdi-monitor"></i>
-                                       Dashboard
-                                   </a>
+                                    <a href="add-user.html">
+                                        <i class="mdi mdi-account"></i>
+                                        Add User
+                                    </a>
                                </li>
                                <li>
                                    <a href="add-work.html">
