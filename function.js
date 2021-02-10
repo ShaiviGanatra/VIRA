@@ -521,3 +521,48 @@ function logout(){
    
 }
 
+/*********************************Add User form**************************************/
+const userForm = document.querySelector('#saveUserForm');
+if(document.getElementById("saveUserForm"))
+{
+    userForm.addEventListener('click',(e)=>{
+    e.preventDefault();
+
+    //get user info
+
+    const useremail = document.getElementById('useremail').value;
+    const pswd = document.getElementById('choosePassword').value;
+    
+
+    //create the user
+
+    firebase.auth().createUserWithEmailAndPassword(useremail , pswd).then(cred => {
+        return database.collection('Users').doc(cred.user.uid).set({
+            useremail : document.getElementById('useremail').value,
+            firstname : document.getElementById('fname').value,
+            lastname : document.getElementById('lname').value,
+            skills : document.getElementById('skillset').value,
+            userRole : document.getElementById('userRole').value
+
+       });
+       
+    })
+    
+    window.alert("User Created Successfully !")
+});
+}
+
+const canceluserForm = document.querySelector('#userCancel');
+if(document.getElementById("userCancel"))
+{
+    canceluserForm.addEventListener('click',(e)=>{
+    e.preventDefault();
+    document.getElementById('fname').value= '';
+    document.getElementById('lname').value= '';
+    document.getElementById('useremail').value = '';
+    document.getElementById('choosePassword').value= '';
+    document.getElementById('skillset').value= '';
+    document.getElementById('userRole').value= '';
+
+    })
+}
