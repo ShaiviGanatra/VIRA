@@ -543,7 +543,7 @@ if(document.getElementById("saveUserForm"))
 
     //create the user
  
-    firebase.auth().createUserWithEmailAndPassword(useremail , pswd).then(cred => {
+    secondaryApp.auth().createUserWithEmailAndPassword(useremail , pswd).then(cred => {
         return database.collection('Users').doc(cred.user.uid).set({
             useremail : document.getElementById('useremail').value,
             firstname : document.getElementById('fname').value,
