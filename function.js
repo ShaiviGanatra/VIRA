@@ -22,6 +22,7 @@ var saveDraft = document.querySelector("#saveDraft");
 
 var database = firebase.firestore();
 var workCollection = database.collection('Work');
+var userCollection = database.collection('Users');
 
 var now     = new Date(); 
 
@@ -532,21 +533,28 @@ if(document.getElementById("saveUserForm"))
 
     const useremail = document.getElementById('useremail').value;
     const pswd = document.getElementById('choosePassword').value;
+    var userskillset = document.getElementById('skillset').value;
     
+    var newskillId = document.getElementById('newInputBox').value;
+    // var array = [];
+    // for(var i=0; i<4; i++)  {
+    //     array.push(newskillId);
+    // }
 
     //create the user
-
+ 
     firebase.auth().createUserWithEmailAndPassword(useremail , pswd).then(cred => {
         return database.collection('Users').doc(cred.user.uid).set({
             useremail : document.getElementById('useremail').value,
             firstname : document.getElementById('fname').value,
             lastname : document.getElementById('lname').value,
-            skills : document.getElementById('skillset').value,
+            userSkillarr : firebase.firestore.FieldValue.arrayUnion(...[userskillset,newskillId]),
             userRole : document.getElementById('userRole').value
 
        });
        
     })
+    
     
     window.alert("User Created Successfully !")
 });
