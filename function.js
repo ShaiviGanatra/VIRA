@@ -480,15 +480,22 @@ loginForm.addEventListener('click',(e)=>{
         
         console.log(cred.user)
         var user = firebase.auth().currentUser;
-       // if (user) {
-        // User is signed in.
         
-      //  window.alert("Logged In Successfully !");
-        window.location.href = "dashboard.html";
-        //} else {
-        // No user is signed in.
-        // window.location.href = "login.html"
-       // }
+        userCollection.doc(user.uid).get().then(doc => {
+            
+            if(doc.data().userRole == "CRM")
+            {
+                window.location.href = "CRM-dashboard.html";
+            }
+            else if(doc.data().userRole == "VI")
+            {
+                window.location.href = "VI-dashboard.html";
+            }
+            else{
+                window.location.href = "dashboard.html"; 
+            }
+            });
+            
     })
     .catch(function(error){
         var errorCode = error.code;
@@ -503,10 +510,14 @@ loginForm.addEventListener('click',(e)=>{
 const userDetails = document.querySelector('.custom-modal-text');
 const setupUI =(user) =>{
     if(user){
+        userCollection.doc(user.uid).get().then(doc => {
+            
         const html = `
             <div>Logged in as ${user.email}</div>
+            <div> ${doc.data().userRole}</div>
         `;
         userDetails.innerHTML = html;
+        })
     }
 }
 
