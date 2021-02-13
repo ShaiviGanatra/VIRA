@@ -23,6 +23,7 @@ var saveDraft = document.querySelector("#saveDraft");
 var database = firebase.firestore();
 var workCollection = database.collection('Work');
 var userCollection = database.collection('Users');
+var clientsCollection = database.collection('Clients');
 
 var now     = new Date(); 
 
@@ -126,7 +127,10 @@ if(document.getElementById("submitCategory")){
         categoryDescription: categoryDescription.value
     })
     .then(() => { window.location.href = "directory.html";
-        console.log('Category Inserted Succesfully');})
+        console.log('Category Inserted Succesfully');
+        window.location.href = "add-category.html";
+
+    })
     .catch(error => {console.error(error)});
 });
 
@@ -565,23 +569,43 @@ if(document.getElementById("saveUserForm"))
        });
        
     })
-    
-    
     window.alert("User Created Successfully !")
+    window.location.href = "add-user.html";
 });
 }
 
-const canceluserForm = document.querySelector('#userCancel');
-if(document.getElementById("userCancel"))
+/*********************************Add Client Details**************************************/
+var cfname = document.getElementById('cfname');
+var clname = document.getElementById('clname');
+var cemail = document.getElementById('cemail');
+var cmobilenum = document.getElementById('cmobilenum');
+var corganization = document.getElementById('corganization');
+var cdepartment = document.getElementById('cdepartment');
+var corganizationweb = document.getElementById('corganizationweb');
+var caddress = document.getElementById('caddress');
+var caddinfo = document.getElementById('caddinfo');
+
+//Add Category Function
+if(document.getElementById("saveClientForm")){
+    document.getElementById("saveClientForm").addEventListener('click', e =>
 {
-    canceluserForm.addEventListener('click',(e)=>{
     e.preventDefault();
-    document.getElementById('fname').value= '';
-    document.getElementById('lname').value= '';
-    document.getElementById('useremail').value = '';
-    document.getElementById('choosePassword').value= '';
-    document.getElementById('skillset').value= '';
-    document.getElementById('userRole').value= '';
+    clientsCollection.add({
+        cfname: cfname.value,
+        clname: clname.value,
+        cemail: cemail.value,
+        cmobilenum: cmobilenum.value,
+        corganization: corganization.value,
+        cdepartment: cdepartment.value,
+        corganizationweb: corganizationweb.value,
+        caddress: caddress.value,
+        caddinfo: caddinfo.value
+    })
+    .then(() => { window.location.href = "add-client.html";
+        window.alert('Client Added Succesfully !');
+        window.location.href = "add-client.html";
 
     })
+    .catch(error => {console.error(error)});
+});
 }
