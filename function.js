@@ -22,7 +22,8 @@ var saveDraft = document.querySelector("#saveDraft");
 
 var database = firebase.firestore();
 var workCollection = database.collection('Work');
-var userCollection = database.collection('Users');
+//var userCollection = database.collection('Users');
+var personCollection = database.collection('Persons');
 var clientsCollection = database.collection('Clients');
 
 var now     = new Date(); 
@@ -485,7 +486,7 @@ loginForm.addEventListener('click',(e)=>{
         console.log(cred.user)
         var user = firebase.auth().currentUser;
         
-        userCollection.doc(user.uid).get().then(doc => {
+        personCollection.doc(user.uid).get().then(doc => {
             
             if(doc.data().userRole == "CRM")
             {
@@ -514,7 +515,7 @@ loginForm.addEventListener('click',(e)=>{
 const userDetails = document.querySelector('.custom-modal-text');
 const setupUI =(user) =>{
     if(user){
-        userCollection.doc(user.uid).get().then(doc => {
+        personCollection.doc(user.uid).get().then(doc => {
             
         const html = `
             <div>Logged in as ${user.email}</div>
@@ -558,8 +559,8 @@ if(document.getElementById("saveUserForm"))
 
     //create the user
  
-    secondaryApp.auth().createUserWithEmailAndPassword(useremail , pswd).then(cred => {
-        return database.collection('Users').doc(cred.user.uid).set({
+    firebase.auth().createUserWithEmailAndPassword(useremail , pswd).then(cred => {
+        return database.collection('Persons').doc(cred.user.uid).set({
             useremail : document.getElementById('useremail').value,
             firstname : document.getElementById('fname').value,
             lastname : document.getElementById('lname').value,
