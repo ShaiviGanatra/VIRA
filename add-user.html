@@ -185,20 +185,20 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Skillset</label>
-                                                <div class="col-sm-6">
+                                                <div class="col-sm-9">
                                                     <input class="form-control" type="text" placeholder="Enter skills of the User" required="required" id="skillset">
                                                     
                                                 </div>
-                                                <div class="col-sm-4">
+                                               <!-- <div class="col-sm-4">
                                                     <button type="button" value="Create Element" class="btn btn-success" onclick="createNewElement();">+</button>
                                                     
-                                                </div>
+                                                </div>-->
                                             </div>
-                                            <div class="form-group row">
+                                           <!-- <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label text-right"></label>
                                                 <div class="col-sm-6" id="newElementId">More Skillset:</div>
                                                                                                 
-                                            </div>
+                                            </div>-->
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Role</label>
                                                 <div class="col-sm-9">
@@ -246,7 +246,7 @@
         <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
         <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
-
+        <!--
         <script type="text/JavaScript">
             function createNewElement() {
                 // First create a DIV element.
@@ -258,7 +258,7 @@
                 // Finally put it where it is supposed to appear.
                 document.getElementById("newElementId").appendChild(txtNewInputBox);
             }
-            </script>
+            </script>-->
         <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyDmbhoJ3ueIYrZYWe5KzGiLOMLnd5-7V68",
@@ -273,7 +273,7 @@
 
             // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
-          //  var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+            var secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
             
         </script>
         <script src="./function.js"></script>
