@@ -662,7 +662,7 @@ function fillviewClient() {
             // console.log(doc.id, " => ", doc.data());
 
             //Make all fields of form read-only
-          
+            $(".readonlytoggle").prop("readonly", true);
             //saving work id to local storage
             localStorage.setItem("ClientId", doc.id);
 
