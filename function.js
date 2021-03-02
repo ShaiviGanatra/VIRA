@@ -175,6 +175,8 @@ categoryCollection.onSnapshot(function(querySnapshot) {
     }
 });
 
+
+
 /****************************Fill Work Table****************************/
 
 // database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
@@ -419,6 +421,7 @@ workCollection.where("status", "==", 2).onSnapshot(function(querySnapshot) {
      }
  });
 
+
 /*****************************Search/Filter on My List Table**********************************/
 
 $(document).ready(function(){
@@ -609,4 +612,73 @@ if(document.getElementById("saveClientForm")){
     })
     .catch(error => {console.error(error)});
 });
+}
+
+
+/****************************Fill Client Table****************************/
+
+clientsCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("clientDisplay") != null){
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("clientDisplay").innerHTML +="<tr class='custom-clickable-row-td'><td>"+change.doc.data().cfname+"</td><td>"+change.doc.data().clname+"</td><td>"
+                +change.doc.data().cemail+"</td><td>"+change.doc.data().corganization+"</td><td>"+change.doc.data().cdepartment+"</td></tr>"
+                
+            }
+        });
+    }
+});
+
+
+/****************************Store Client fname on Clicking Client Table's Row****************************/
+
+$(document).on('click', '.custom-clickable-row-td', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+
+        //storing workTitle to local storage
+        localStorage.setItem("cfname", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "view-client-form.html";
+});
+
+/****************************Loading of Add-Work-Edit****************************/
+
+function fillviewClient() {
+    database.collection("Clients").where("cfname", "==", localStorage.getItem("cfname"))
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.id, " => ", doc.data());
+
+            //Make all fields of form read-only
+          
+            //saving work id to local storage
+            localStorage.setItem("ClientId", doc.id);
+
+            //Filling form with data from firebase
+            $("#cfname").val(doc.data().cfname);
+            $("#clname").val(doc.data().clname);
+            $("#cemail").val(doc.data().cemail);
+            $("#cmobilenum").val(doc.data().cmobilenum);
+            $("#corganization").val(doc.data().corganization);
+            $("#cdepartment").val(doc.data().cdepartment);
+            $("#corganizationweb").val(doc.data().corganizationweb);
+            $("#caddress").val(doc.data().caddress);
+            $("#caddinfo").val(doc.data().caddinfo);
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
 }
