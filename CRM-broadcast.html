@@ -26,58 +26,59 @@
     </head>
     <body>
         <!-- Top Bar Start -->
-        <div class="topbar">
-             <!-- Navbar -->
-             <nav class="navbar navbar-expand-lg navbar-custom">
-                <a href="CRM-dashboard.html" class="logo">
-                    <span>
-                        <h1 class="logo-lg">VIRA</h1>
-                    </span>
-                </a>
-              
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="CRM-dashboard.html" class="mr-5">Dashboard</a>
-                      </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="CRM-broadcast.html">Broadcast</a>
-                    </li>  
-                    <li class="nav-item">
-                      <a class="nav-link" href="CRM-my-work.html">My Work</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="category.html">Category</a>
-                      </li> -->
-                    <li class="nav-item">
-                    <a class="nav-link" href="CRM-directory.html">Directory</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a href="#custom-modal" class="nav-link" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#38414a">User</a>
-                      </li>
-                    <li class="dropdown">
-                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="false" aria-expanded="false">
-                            
-                            <img src="assets/images/users/user-1.jpg" alt="profile-user" class="rounded-circle" /> 
-                            <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
-                            <!-- <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
-                            <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> -->
-                            <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" onclick ="logout()"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
-                        </div>
-                    </li>
-                    </ul>
-                </div>
-              </nav>
-            <!-- end navbar-->
-        </div>
-        <!--USER MODAL
+                <!-- Top Bar Start -->
+                <div class="topbar">
+                    <!-- Navbar -->
+                    <nav class="navbar navbar-expand-lg navbar-custom">
+                       <a href="CRM-dashboard.html" class="logo">
+                           <span>
+                               <h1 class="logo-lg">VIRA</h1>
+                           </span>
+                       </a>
+                     
+                       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                         <ul class="navbar-nav ml-auto">
+                           <li class="nav-item">
+                               <a class="nav-link" href="CRM-dashboard.html" class="mr-5">Dashboard</a>
+                             </li>
+                           <li class="nav-item">
+                               <a class="nav-link" href="CRM-broadcast.html">Broadcast</a>
+                           </li>  
+                           <li class="nav-item">
+                             <a class="nav-link" href="CRM-my-work.html">My Work</a>
+                           </li>
+                           <!-- <li class="nav-item">
+                               <a class="nav-link" href="category.html">Category</a>
+                             </li> -->
+                           <li class="nav-item">
+                           <a class="nav-link" href="CRM-directory.html">Directory</a>
+                           </li>
+                           
+                           <li class="nav-item">
+                               <a href="#custom-modal" class="nav-link" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#38414a">User</a>
+                             </li>
+                           <li class="dropdown">
+                               <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="false" aria-expanded="false">
+                                   
+                                   <img src="assets/images/users/user-1.jpg" alt="profile-user" class="rounded-circle" /> 
+                                   <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
+                               </a>
+                               <div class="dropdown-menu dropdown-menu-right">
+                                   <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
+                                   <!-- <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
+                                   <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> -->
+                                   <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                                   <div class="dropdown-divider"></div>
+                                   <a class="dropdown-item" href="#" onclick ="logout()"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
+                               </div>
+                           </li>
+                           </ul>
+                       </div>
+                     </nav>
+                   <!-- end navbar-->
+               </div>
+    <!--USER MODAL
         <div id="modal-user" class="modal">
             <div class="modal-content center-align">
                 <h4>User Details</h4><br>
@@ -90,7 +91,7 @@
                 <span>&times;</span><span class="sr-only">Close</span>
             </button>
             <h4 class="custom-modal-title">User Details</h4>
-            <div class="custom-modal-text color" style="color: black;">
+            <div class="custom-modal-text color" style="color: black">
                
             </div>
         </div> 
@@ -116,7 +117,20 @@
                                         My Profile
                                     </a>
                                 </li>
-                               <!-- <li>
+                                <!-- <li>
+                                    <a href="add-user.html">
+                                        <i class="mdi mdi-account"></i>
+                                        Add User
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="add-client.html">
+                                        <i class="mdi mdi-account-multiple"></i>
+                                        Add Client
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="add-work.html">
                                         <i class="mdi mdi-buffer"></i>
                                         Add Work
@@ -127,8 +141,8 @@
                                         <i class="mdi mdi-briefcase-plus"></i>
                                         Add Category
                                     </a>
-                                    </li>-->
-                                <li>
+                                    </li>
+                                <li> -->
                                     <div class="container">
                                         <div style="padding-right :600px"></div>
                                     </div>
@@ -158,7 +172,7 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title mt-0">My List</h3>
+                                    <h3 class="card-title mt-0">Work Available</h3>
                                     <div data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="scrollspy-example" id="mylistdashboard">
                                         <!-- <h5 id="ScrollyHome">Home</h5>
                                         <p class="text-muted">Ad leggings keytar, brunch id art party dolor labore. 
@@ -192,7 +206,7 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title mt-0">Recently Added Work</h3>
+                                    <h3 class="card-title mt-0">For Me</h3>
                                     <div data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="scrollspy-example" id="recentlyAdded" >
                                         
                                         <!--<h5 id="ScrollyHome" >Home</h5>
@@ -217,8 +231,7 @@
             </div>
 
             <!-- Page Content-->
-            <div class="page-content">
-                
+           
                 <footer class="footer text-center text-sm-left">
                     &copy; 2016 Relive Technology Pvt. Ltd. <span class="text-muted d-none d-sm-inline-block float-right">Crafted with <i class="mdi mdi-heart text-danger"></i> by Team VIRA</span>
                 </footer>
@@ -241,9 +254,9 @@
 
         <script src="assets/plugins/moment/moment.js"></script>
         <script src="assets/plugins/apexcharts/apexcharts.min.js"></script>
-       <!-- <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>
+        <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>
         <script src="https://apexcharts.com/samples/assets/series1000.js"></script>
-        <script src="https://apexcharts.com/samples/assets/ohlc.js"></script>-->
+        <script src="https://apexcharts.com/samples/assets/ohlc.js"></script>
         <script src="assets/pages/jquery.dashboard.init.js"></script>
 
         <!-- App js -->

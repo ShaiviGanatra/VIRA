@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title> VIRA </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Integrated Business Process Management System for Virtual Assistants" name="VIRA" />
+        <meta content="Business Process Management System" name="VIRA" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/logo/favicon.ico">
+
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+        <style>
+            .form-group.required .control-label:after { 
+            content:" *";
+            color:red;
+            }
+        </style>
+
+    </head>
+    <body  onload="fillAddWorkEdit()">
+            <!-- Top Bar Start -->
+            <div class="topbar">
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-custom">
+                   <a href="CRM-dashboard.html" class="logo">
+                       <span>
+                           <h1 class="logo-lg">VIRA</h1>
+                       </span>
+                   </a>
+                 
+                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav ml-auto">
+                       <li class="nav-item">
+                           <a class="nav-link" href="CRM-dashboard.html" class="mr-5">Dashboard</a>
+                         </li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="CRM-broadcast.html">Broadcast</a>
+                       </li>  
+                       <li class="nav-item">
+                         <a class="nav-link" href="CRM-my-work.html">My Work</a>
+                       </li>
+                       <!-- <li class="nav-item">
+                           <a class="nav-link" href="category.html">Category</a>
+                         </li> -->
+                       <li class="nav-item">
+                       <a class="nav-link" href="CRM-directory.html">Directory</a>
+                       </li>
+                       
+                       <li class="nav-item">
+                           <a href="#custom-modal" class="nav-link" data-animation="fadein" data-plugin="custommodal" data-overlayColor="#38414a">User</a>
+                         </li>
+                       <li class="dropdown">
+                           <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="false" aria-expanded="false">
+                               
+                               <img src="assets/images/users/user-1.jpg" alt="profile-user" class="rounded-circle" /> 
+                               <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
+                           </a>
+                           <div class="dropdown-menu dropdown-menu-right">
+                               <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i> Profile</a>
+                               <!-- <a class="dropdown-item" href="#"><i class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
+                               <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i> Settings</a> -->
+                               <a class="dropdown-item" href="#"><i class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
+                               <div class="dropdown-divider"></div>
+                               <a class="dropdown-item" href="#" onclick ="logout()"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
+                           </div>
+                       </li>
+                       </ul>
+                   </div>
+                 </nav>
+               <!-- end navbar-->
+           </div>
+               <div id="custom-modal" class="modal-demo">
+                <button type="button" class="close" onclick="Custombox.modal.close();">
+                    <span>&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="custom-modal-title">User Details</h4>
+                <div class="custom-modal-text color" style="color: black">
+                   
+                </div>
+            </div> 
+               <!-- Top Bar End -->
+               <div class="page-wrapper-img">
+               </div><!--end page-wrapper-img-->
+               
+               <div class="page-wrapper">
+                   <div class="page-wrapper-inner">
+       
+                       <!-- Navbar Custom Menu -->
+                       <div class="navbar-custom-menu">
+                           
+                           <div class="container-fluid">
+                               <div id="navigation">
+                                   <!-- Navigation Menu-->
+                                   <ul class="navigation-menu list-unstyled">
+                                    <li>
+                                        <a href="#">
+                                            <i class="mdi mdi-account"></i>
+                                            My Profile
+                                        </a>
+                                    </li>
+                                       <!-- <li>
+                                            <a href="add-user.html">
+                                                <i class="mdi mdi-account"></i>
+                                                Add User
+                                            </a>
+                                       </li>
+                                       <li>
+                                        <a href="add-client.html">
+                                            <i class="mdi mdi-account-multiple"></i>
+                                            Add Client
+                                        </a>
+                                        </li>
+                                       <li>
+                                           <a href="add-work.html">
+                                               <i class="mdi mdi-buffer"></i>
+                                               Add Work
+                                           </a>
+                                       </li>
+                                       <li>
+                                        <a href="add-category.html">
+                                            <i class="mdi mdi-briefcase-plus"></i>
+                                            Add Category
+                                        </a>
+                                        </li> -->
+                                    <li>
+                                       <li>
+                                        <div class="container">
+                                            <div style="padding-right :600px"></div>
+                                        </div>
+    
+                                    </li>
+                                    <!-- <li class="hide-phone app-search">
+                                        <form role="search" class="">
+                                            <input type="text" placeholder="Search..." class="readonlytoggle form-control">
+                                            <a href=""><i class="fas fa-search"></i></a>
+                                        </form>
+                                    </li>
+                                       <li>
+                                        <button type="submit" class="btn btn-primary ml-auto" id="search">Search</button>
+                                    </li> -->
+                                   </ul>
+                                   <!-- End navigation menu -->
+                               </div> <!-- end navigation -->
+                           </div> <!-- end container-fluid -->
+                       </div>
+                       <!-- end left-sidenav-->
+                   </div>
+                   <!--end page-wrapper-inner -->
+            <!-- Page Content-->
+            <div class="page-content">
+                <div class="container-fluid"> 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">        
+                                    <h1 class="mt-0 header-title">Add Work</h1>
+                                    <form  method="POST" id="addworkeditform">                                  
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class = "form-group required">
+                                             <div class="form-group row">
+                                                <label class="control-label col-sm-2 col-form-label text-right">Select Category</label>
+                                                <div class="col-sm-3">
+                                                    <select class="readonlytoggle form-control" id="selectCategory">
+                                                        <!-- <option>Digital Marketing</option>
+                                                        <option>Email Marketing</option>
+                                                        <option>Proposal Writing</option> -->
+                                                    </select>
+                                                
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-text-input" class="control-label col-sm-2 col-form-label text-right">Short Code</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle readonlytoggle form-control" type="text" placeholder="Enter unique digit identifier" required="required" id="shortCode">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Work Title</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter title of the work" id="workTitle" required="required" min="1" max="50">
+                                                </div>
+                                            </div> 
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Work Description</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter short description of work" id="workDescription" required="required" min="1" max="100">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Long Description</label>
+                                                <div class="col-sm-9">
+                                                    <textarea rows="4" cols="50" style="color: #a8a8b1" placeholder = "Enter long description of work" name="comment" form="usrform" class="readonlytoggle form-control" id="longDescription"  required="required" min="10" max="250"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Time Required</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" placeholder="Enter Hours required for the Work" required="required" id="timeRequired">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Skills Required</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter skills required for the work" required="required" id="skillsRequired">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="control-label col-sm-2 col-form-label text-right">Tools Required</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter assistance tools required for the work" required="required" id="toolsRequired">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Client Questions</label>
+                                                <div class="col-sm-9">
+                                                    <textarea rows="4" cols="50" name="comment" form="usrform" class="readonlytoggle form-control"  placeholder="Enter client questions for the work" id="clientQuestions"></textarea>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Training PDF</label>
+                                                <div class="col-sm-9">
+                                                    <button type="file" class="btn btn-primary ml-2" id="trainingPDF">Upload PDF</button>
+                                                    <input type="file" id="myFile" name="filename">
+                                                </div>
+                                            </div> -->
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Video Training</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter video URL link here" id="videoTraining">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Work Folder</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter name of the work folder" id="workFolder">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Work Wikipedia</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter Wikipedia link here" id="workWikipedia">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Related Work</label>
+                                                <div class="col-sm-9">
+                                                    <input class="readonlytoggle form-control" type="text" placeholder="Enter reference to related work" id="relatedWork">
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary ml-4 mr-5 btn-group float-right" id="saveChangesWork">Save Changes</button>
+                                            <button type="button" class="btn btn-danger ml-4 mr-5 btn-group float-right" id="deleteWork">Delete</button>  
+                                            <button type="button" class="btn btn-warning ml-4 mr-5 btn-group float-right" id="editWork">Edit</button>  
+                                        </div> 
+                                        </div>                                  
+                                        </div>
+                                    </div>
+                                </form>                                                                      
+                                </div><!--end card-body-->
+                            </div><!--end card-->
+                        </div><!--end col-->
+                    </div><!--end row-->
+
+                </div><!-- container -->
+
+                <footer class="footer text-center text-sm-left">
+                    &copy; 2016 Relive Technology Pvt. Ltd. <span class="text-muted d-none d-sm-inline-block float-right">Crafted with <i class="mdi mdi-heart text-danger"></i> by Team VIRA</span>
+                </footer>
+            </div>
+            <!-- end page content -->
+        </div>
+        <!-- end page-wrapper -->
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/waves.min.js"></script>
+        <script src="assets/js/jquery.slimscroll.min.js"></script>
+        <script src="assets/plugins/custombox/custombox.min.js"></script>
+        <script src="assets/plugins/custombox/custombox.legacy.min.js"></script>
+        <script src="assets/pages/jquery.modal-animation.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+
+        
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyDmbhoJ3ueIYrZYWe5KzGiLOMLnd5-7V68",
+                authDomain: "vira-db.firebaseapp.com",
+                databaseURL: "https://vira-db-default-rtdb.firebaseio.com",
+                projectId: "vira-db",
+                storageBucket: "vira-db.appspot.com",
+                messagingSenderId: "252309077205",
+                appId: "1:252309077205:web:de0ce8e57f996fdf06f65c",
+                measurementId: "G-6FT7CDJ9YZ"
+                };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            
+        </script>
+        <script src="./function.js"></script>
+
+    </body>
+</html>
