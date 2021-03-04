@@ -14,6 +14,8 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+        <!-- Sweet Alert -->
+        <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
         <style>
             .form-group.required .control-label:after { 
             content:" *";
@@ -242,10 +244,23 @@
                                                     <input class="form-control" type="text" placeholder="Enter Wikipedia link here" id="workWikipedia">
                                                 </div>
                                             </div>
+                                            
                                             <div class="form-group row">
                                                 <label for="example-email-input" class="col-sm-2 col-form-label text-right">Related Work</label>
                                                 <div class="col-sm-9">
                                                     <input class="form-control" type="text" placeholder="Enter reference to related work" id="relatedWork">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Assigned To</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" placeholder="Enter Wikipedia link here" id="assignedTo">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Karma Points</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="number" placeholder="Enter Wikipedia link here" id="points">
                                                 </div>
                                             </div>
                                             <button type="submit" class="btn btn-success ml-4 mr-5 btn-group float-right" id="publish">Publish</button>

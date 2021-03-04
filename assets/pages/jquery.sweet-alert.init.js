@@ -29,13 +29,13 @@
                 'question'
             )
         });
-
+/*
         //Success Message
         $('#sa-success').click(function () {
             swal(
                 {
-                    title: 'Good job!',
-                    text: 'You clicked the button!',
+                    title: 'Message Sent To CRM!',
+                    text: '',
                     type: 'success',
                     showCancelButton: true,
                     confirmButtonClass: 'btn btn-success',
@@ -43,7 +43,7 @@
                 }
             )
         });
-
+*/
         //Warning Message
         $('#sa-warning').click(function () {
             swal({
