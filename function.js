@@ -613,7 +613,7 @@ const setupUI =(user) =>{
                     // doc.data() is never undefined for query doc snapshots
                     querySnapshot.docChanges().forEach(function(change,i){
                         /***************************Display in For me Section***********************************************/
-                        if(doc.data().firstname == change.doc.data().assignedTo)
+                        if(doc.data().name == change.doc.data().assignedTo)
                         {
 
                             try{
@@ -670,8 +670,8 @@ if(document.getElementById("saveUserForm"))
     secondaryApp.auth().createUserWithEmailAndPassword(useremail , pswd).then(cred => {
         return database.collection('Users').doc(cred.user.uid).set({
             useremail : document.getElementById('useremail').value,
-            firstname : document.getElementById('fname').value,
-            lastname : document.getElementById('lname').value,
+            name : document.getElementById('name').value,
+            // lastname : document.getElementById('lname').value,
             userSkillarr : firebase.firestore.FieldValue.arrayUnion(...[userskillset]),
             userRole : document.getElementById('userRole').value
 
@@ -828,8 +828,8 @@ $(document).on('click', '.custom-clickable-h4', function(e){
     window.location.href = "VI-add-work-edit.html";
 });
 
-
-  //Success Message
+  
+//Success Message
   $('#sa-success').click(function () {
     swal(
         {
