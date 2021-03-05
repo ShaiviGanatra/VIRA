@@ -619,7 +619,7 @@ const setupUI =(user) =>{
                             try{
                                 if(change.type === "added"){
                                     document.createElement("AssignedAt").innerHTML = now;
-                                    document.getElementById("forMe").innerHTML += "<div class='custom-clickable-h4'><h5>"+change.doc.data().workTitle+
+                                    document.getElementById("forMe").innerHTML += "<div class='custom-clickable-forMe'><h5>"+change.doc.data().workTitle+
                                     "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
                                 }
                             }catch(err){}
@@ -807,7 +807,7 @@ query.onSnapshot(function(querySnapshot) {
     }    
 });
 
-/*****************************Click on Recently Added WorkTitle**********************************/
+/*****************************Click on Work Available  WorkTitle**********************************/
 
 $(document).on('click', '.custom-clickable-h4', function(e){
     // var url = $(this).data('href');
@@ -825,9 +825,67 @@ $(document).on('click', '.custom-clickable-h4', function(e){
     }
     
     //redirecting to add-work-edit
-    window.location.href = "VI-add-work-edit.html";
+    window.location.href = "VI-workavailable.html";
+});
+/*****************************Click on forMe  WorkTitle**********************************/
+
+$(document).on('click', '.custom-clickable-forMe', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "VI-for-me.html";
 });
 
+/*****************************CRM Work Avialable Title**********************************/
+
+// var recentlyAdded = document.getElementById('recentlyAdded');
+var query = workCollection.where("status", "==", 1).orderBy("createdAt","desc");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMworkavailable") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    document.createElement("createdAt").innerHTML = now;
+                    document.getElementById("CRMworkavailable").innerHTML += "<div class='custom-clickable-CRMWA'><h5>"+change.doc.data().workTitle+
+                    "</h5><p class='text-muted'>Created at: "+change.doc.data().createdAt.toDate()+"</p></div><hr>" 
+                }
+            }catch(err){}
+        });
+    }    
+});
+/*****************************Click on forMe  WorkTitle**********************************/
+
+$(document).on('click', '.custom-clickable-CRMWA', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "CRM-workavailable.html";
+});
   
 //Success Message
   $('#sa-success').click(function () {
