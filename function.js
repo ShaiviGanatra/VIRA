@@ -171,7 +171,7 @@ if(document.getElementById("submitCategory")){
 
 }
 
-/****************************Display Category****************************/
+/****************************Manager Display Category****************************/
 
 var categoryDisplay = document.getElementById('categoryDisplay');
 
@@ -193,7 +193,28 @@ categoryCollection.onSnapshot(function(querySnapshot) {
         document.getElementById("categoryDisplay").innerHTML += '</div>'
     }    
 });
+/****************************CRM Display Category****************************/
 
+var CRMcategoryDisplay = document.getElementById('CRMcategoryDisplay');
+
+categoryCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMcategoryDisplay") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("CRMcategoryDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='category-cardCRM card-body'><h4>" + change.doc.data().categoryName + 
+                "</h4><p>" +change.doc.data().categoryShortname+"</p><p class='card-text text-muted'>" 
+                +change.doc.data().categoryDescription +"</p></div></div>"
+                if(i!=0 && i%2 == 0){
+
+                    // add end of row ,and start new row on every 2 elements
+                    document.getElementById("CRMcategoryDisplay").innerHTML += '</div>'
+                  }
+            }
+        });
+        document.getElementById("CRMcategoryDisplay").innerHTML += '</div>'
+    }    
+});
 /****************************Fill Select Category****************************/
 
 var sc = document.getElementById('selectCategory');
@@ -211,7 +232,7 @@ categoryCollection.onSnapshot(function(querySnapshot) {
 
 
 
-/****************************Fill Work Table****************************/
+/****************************Manager Fill Work Table****************************/
 
 // database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
 // var workDisplay = document.getElementById('workDisplay');
@@ -227,7 +248,8 @@ workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
  });
 
 
-/****************************Store workTitle on Clicking Work Table's Row****************************/
+
+/****************************(Manager)Store workTitle on Clicking Work Table's Row****************************/
 
 $(document).on('click', '.custom-clickable-row', function(e){
     // var url = $(this).data('href');
@@ -247,6 +269,49 @@ $(document).on('click', '.custom-clickable-row', function(e){
     //redirecting to add-work-edit
     window.location.href = "add-work-edit.html";
 });
+
+
+
+
+/****************************CRM Fill Work Table****************************/
+
+// database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
+// var workDisplay = document.getElementById('workDisplay');
+workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMworkDisplay") != null){
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("CRMworkDisplay").innerHTML +="<tr class='custom-clickable-rowCRMworkDisplay'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+                +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
+            }
+        });
+    }
+});
+
+
+
+/****************************(CRM)Store workTitle on Clicking Work Table's Row****************************/
+
+$(document).on('click', '.custom-clickable-rowCRMworkDisplay', function(e){
+   // var url = $(this).data('href');
+   e = e || window.event;
+
+   var target = e.srcElement || e.target;
+   while (target && target.nodeName !== "TR") {
+       target = target.parentNode;
+   }
+   if (target) {
+       var cells = target.getElementsByTagName("td");
+
+       //storing workTitle to local storage
+       localStorage.setItem("workTitle", cells[0].innerHTML);
+   }
+   
+   //redirecting to add-work-edit
+   window.location.href = "CRM-workavailable.html";
+});
+
+
 
 /****************************Loading of Add-Work-Edit****************************/
 
@@ -405,7 +470,7 @@ var getWorkIdFromURL = () => {
     return workId;
 }
 
-/*****************************Recently Added on Dashboard**********************************/
+/*****************************Manager Recently Added on Dashboard**********************************/
 
 // var recentlyAdded = document.getElementById('recentlyAdded');
 var query = workCollection.where("status", "==", 1).orderBy("createdAt","desc");
@@ -416,7 +481,7 @@ query.onSnapshot(function(querySnapshot) {
             try{
                 if(change.type === "added"){
                     document.createElement("createdAt").innerHTML = now;
-                    document.getElementById("recentlyAdded").innerHTML += "<div class='custom-clickable-h5'><h5>"+change.doc.data().workTitle+
+                    document.getElementById("recentlyAdded").innerHTML += "<div class='custom-clickable-h5recently'><h5>"+change.doc.data().workTitle+
                     "</h5><p class='text-muted'>Created at: "+change.doc.data().createdAt.toDate()+"</p></div><hr>" 
                 }
             }catch(err){}
@@ -424,9 +489,9 @@ query.onSnapshot(function(querySnapshot) {
     }    
 });
 
-/*****************************Click on Recently Added WorkTitle**********************************/
+/*****************************Manager Click on Recently Added WorkTitle**********************************/
 
-$(document).on('click', '.custom-clickable-h5', function(e){
+$(document).on('click', '.custom-clickable-h5recently', function(e){
     // var url = $(this).data('href');
     e = e || window.event;
 
@@ -445,6 +510,47 @@ $(document).on('click', '.custom-clickable-h5', function(e){
     window.location.href = "add-work-edit.html";
 });
 
+/*****************************CRM Recently Added on Dashboard**********************************/
+
+// var recentlyAdded = document.getElementById('recentlyAdded');
+var query = workCollection.where("status", "==", 1).orderBy("createdAt","desc");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMrecentlyAdded") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    document.createElement("createdAt").innerHTML = now;
+                    document.getElementById("CRMrecentlyAdded").innerHTML += "<div class='custom-clickable-h5recentlyCRM'><h5>"+change.doc.data().workTitle+
+                    "</h5><p class='text-muted'>Created at: "+change.doc.data().createdAt.toDate()+"</p></div><hr>" 
+                }
+            }catch(err){}
+        });
+    }    
+});
+
+/*****************************Manager Click on Recently Added WorkTitle**********************************/
+
+$(document).on('click', '.custom-clickable-h5recentlyCRM', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "CRM-workavailable.html";
+});
+
+
 /*****************************Search/Filter on Work Table**********************************/
 
 $(document).ready(function(){
@@ -456,7 +562,7 @@ $(document).ready(function(){
     });
   });
 
-/*****************************Category Click -> Fitered Work wrt Category**********************************/
+/*****************************Manager Category Click -> Fitered Work wrt Category**********************************/
 
 $(document).on('click', '.category-card', function(e){
     
@@ -478,6 +584,28 @@ $(document).on('click', '.category-card', function(e){
 
 });
 
+/*****************************CRM Category Click -> Fitered Work wrt Category**********************************/
+
+$(document).on('click', '.category-cardCRM', function(e){
+    
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h4");
+
+        //storing workTitle to local storage
+        localStorage.setItem("categoryName", cells[0].innerHTML);
+    }
+
+    //redirecting to work.html
+    window.location.href = "CRM-work.html";
+
+});
+
 /*****************************Search Work Function on Work**********************************/
 
 function searchWork(){
@@ -486,7 +614,7 @@ function searchWork(){
     localStorage.removeItem("categoryName");
 }
 
-/****************************Fill My List Table****************************/
+/****************************Manager Fill My List Table****************************/
 
 // database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
 // var mylistworkDisplay = document.getElementById('workDisplay');
@@ -501,6 +629,43 @@ workCollection.where("status", "==", 2).onSnapshot(function(querySnapshot) {
      }
  });
 
+ /****************************CRM Fill My List Table****************************/
+
+// database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
+// var mylistworkDisplay = document.getElementById('workDisplay');
+workCollection.where("status", "==", 2).onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMmylistworkDisplay") != null){
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("CRMmylistworkDisplay").innerHTML +="<tr class='custom-clickable-rowCRMmylistworkDisplay'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+                +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
+            }
+        });
+    }
+});
+/****************************(CRM)Store workTitle on Clicking Work Table's Row****************************/
+
+$(document).on('click', '.custom-clickable-rowCRMmylistworkDisplay', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "CRM-workavailable.html";
+});
+
+
+
 
 /*****************************Search/Filter on My List Table**********************************/
 
@@ -513,7 +678,7 @@ $(document).ready(function(){
     });
   });
 
-/*****************************My List on Dashboard**********************************/
+/*****************************Manager My List on Dashboard**********************************/
 
 // var recentlyAdded = document.getElementById('recentlyAdded');
 query = workCollection.where("status", "==", 2).orderBy("createdAt","desc");
@@ -524,7 +689,46 @@ query.onSnapshot(function(querySnapshot) {
             try{
                 if(change.type === "added"){
                     document.createElement("createdAt").innerHTML = now;
-                    document.getElementById("mylistdashboard").innerHTML += "<div class='custom-clickable-h5'><h5>"+change.doc.data().workTitle+
+                    document.getElementById("mylistdashboard").innerHTML += "<div class='custom-clickable-h5mylist'><h5>"+change.doc.data().workTitle+
+                    "</h5><p class='text-muted'>Created at: "+change.doc.data().createdAt.toDate()+"</p></div><hr>" 
+                }
+            }catch(err){}
+        });
+    }    
+});
+/*****************************Manager Click on mylist WorkTitle**********************************/
+
+$(document).on('click', '.custom-clickable-h5mylist', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "add-work-edit.html";
+});
+
+/*****************************CRMMy List on Dashboard**********************************/
+
+// var recentlyAdded = document.getElementById('recentlyAdded');
+query = workCollection.where("status", "==", 2).orderBy("createdAt","desc");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMmylistdashboard") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    document.createElement("createdAt").innerHTML = now;
+                    document.getElementById("CRMmylistdashboard").innerHTML += "<div class='custom-clickable-h5CRMmylist'><h5>"+change.doc.data().workTitle+
                     "</h5><p class='text-muted'>Created at: "+change.doc.data().createdAt.toDate()+"</p></div><hr>" 
                 }
             }catch(err){}
@@ -532,7 +736,26 @@ query.onSnapshot(function(querySnapshot) {
     }    
 });
 
+/*****************************CRM Click on mylist WorkTitle**********************************/
 
+$(document).on('click', '.custom-clickable-h5CRMmylist', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "CRM-workavailable.html";
+});
 
 /*******************************Login Credentials*************************************************/
 
