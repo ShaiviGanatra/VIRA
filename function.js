@@ -1089,7 +1089,7 @@ query.onSnapshot(function(querySnapshot) {
         });
     }    
 });
-/*****************************Click on forMe  WorkTitle**********************************/
+/*****************************Click on Work Available  WorkTitle**********************************/
 
 $(document).on('click', '.custom-clickable-CRMWA', function(e){
     // var url = $(this).data('href');
@@ -1122,4 +1122,23 @@ $(document).on('click', '.custom-clickable-CRMWA', function(e){
             cancelButtonClass: 'btn btn-danger ml-2'
         }
     )
+});
+
+/*****************************CRM Assigned To Broadcast**********************************/
+
+// var recentlyAdded = document.getElementById('recentlyAdded');
+var query = workAssignedCol.orderBy("AssignedAt","desc");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMassignedTo") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    document.createElement("AssignedAt").innerHTML = now;
+                    document.getElementById("CRMassignedTo").innerHTML += "<div><h5>"+change.doc.data().workTitle+
+                    " --> Assigned To : "+change.doc.data().assignedTo+"</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                }
+            }catch(err){}
+        });
+    }    
 });
