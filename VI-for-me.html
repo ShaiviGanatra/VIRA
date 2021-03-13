@@ -258,6 +258,18 @@
                                                 </div>
                                             </div>
                                             
+                                            <!--<button type="button" class="btn btn-primary ml-4 mr-5 btn-group float-right" id="updateStatus">Update Status</button>-->
+                                            <div class="form-group row">
+                                                <label for="example-email-input" class="col-sm-2 col-form-label text-right">Work Status</label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control" id="statusoptions" onchange = "myStatus()">
+                                                        <option>Select status</option>
+                                                        <option value="In Progress">In Progress</option>
+                                                        <option value="Completed">Completed</option>                                                                                  
+                                                    
+                                                </select>
+                                            </div> 
+                                            </div>
                                            
                                         </div> 
                                         </div>                                  
@@ -278,7 +290,7 @@
             <!-- end page content -->
         </div>
         <!-- end page-wrapper -->
-
+       
         <!-- jQuery  -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -319,6 +331,30 @@
             firebase.initializeApp(firebaseConfig);
             
         </script>
+         <script>
+            
+            var database = firebase.firestore();
+            var workAssignedCol = database.collection('workAssigned');
+                function myStatus() {
+                    var statusOptions = document.getElementById("statusoptions").value;
+                        if(statusOptions == "In Progress"){
+                            workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
+                                "Completestatus": "In Progress"
+                            })
+                        }
+                        else if(statusOptions == "Completed"){
+                                workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
+                                 "Completestatus": "Completed"
+                                 })
+                        }
+                        // else {
+                        //         workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
+                        //          "Completestatus": "Assigned"
+                        //          })
+                        // }
+                        alert("Status updated to :" +statusOptions);
+                  }
+            </script>
         <script src="./function.js"></script>
 
     </body>

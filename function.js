@@ -83,7 +83,7 @@ if(addworkform != null){
                     points : points.value,
                     relatedWork: relatedWork.value,
                     status : 1,
-                    Completestatus: 0,
+                    Completestatus: Assigned,
                     AssignedAt: now
                 }).then(() => { window.location.href = "work.html";
                 console.log('Work Assigned Succesfully');
@@ -424,7 +424,7 @@ $("#saveChangesWork").on("click", function() {
         "assignedTo" : assignedTo.value,
         "points" : points.value,
         "status": 1,
-        "Completestatus": 0
+        "Completestatus": Assigned
         
     })
     .then(function() {
@@ -851,8 +851,30 @@ const setupUI =(user) =>{
                 } 
                 
             })
-        
+          
+              /**************************************Update Status Vi-for-me******************************************/
+            //   var updateStatus = document.querySelector("#updateStatus");
+            //   var statusOptions = document.getElementById("statusoptions").value;
+            //   if(updateStatus)
+            //       {
+            //           updateStatus.addEventListener("click" , async(e) =>
+            //           {
+            //                 if(statusOptions == "In Progress"){
+            //                     workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
+            //                      "Completestatus": 1
+            //                     })
+            //                 }
+            //                else if(statusOptions == "Completed"){
+            //                     workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
+            //                      "Completestatus": 2
+            //                     })
+            //                }
+            //                alert("Status updated to :" +statusOptions);
+            //           })
+            //       }
+            
 
+          
         })
     }
 }
@@ -1142,3 +1164,25 @@ query.onSnapshot(function(querySnapshot) {
         });
     }    
 });
+
+/*****************************CRM Work Assigned Table**********************************/
+
+var query = workAssignedCol.orderBy("AssignedAt","desc");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMworkAssignedtable") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    document.createElement("createdAt").innerHTML = now;
+                    document.getElementById("CRMworkAssignedtable").innerHTML +=
+                    "<tr><td><p class='d-inline-block align-middle mb-0'><a class='d-inline-block align-middle mb-0 product-name'>"+change.doc.data().assignedTo+
+                    "</a></p></td><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().points+"</td><td>"+change.doc.data().timeRequired+
+                    "</td><td><span class='badge badge-soft-warning'>"+change.doc.data().Completestatus+
+                    "</span></td><td><div class='btn-group'><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-edit'></i></button><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-trash-alt'></i></button> </div></td></tr>"
+                }
+            }catch(err){}
+        });
+    }    
+});
+
