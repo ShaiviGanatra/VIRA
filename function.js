@@ -1186,3 +1186,62 @@ query.onSnapshot(function(querySnapshot) {
     }    
 });
 
+/*****************************Change Color after clicking on Interested button**********************************/
+
+// document.querySelectorAll('#interestedbtn').forEach(function(e) {
+//     e.addEventListener('click', function() {
+//       this.style.backgroundColor = "red";
+//     })
+//   });
+// function interestedButton(_this) {
+//     _this.style.backgroundColor = "yellow";
+//   }
+
+// let interestedButton = document.querySelector('#interestedbtn');
+// interestedButton.addEventListener("click", () => interestedButton.style.backgroundColor='yellow')
+
+// document.getElementById("interestedbtn").style.backgroundColor ="light-blue";
+
+
+// document.getElementById("interestedbtn").onclick = function(){
+//             this.style.backgroundColor ="black";
+//             document.getElementById("interestedbtn").style.backgroundColor ="gray";
+// };
+function interestedButton(){
+    alert("CRM is notified about you !");
+}
+
+/****************************Fill Users Table****************************/
+userCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("usersDisplay") != null){
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("usersDisplay").innerHTML +="<tr class='custom-clickable-row-users'><td>"+change.doc.data().name+"</td><td>"+change.doc.data().useremail+"</td><td>"
+                +change.doc.data().userSkillarr+"</td><td>"+change.doc.data().userRole+"</td></tr>"
+                
+            }
+        });
+    }
+});
+
+
+/****************************Store Users name on Clicking Users Table's Row****************************/
+
+$(document).on('click', '.custom-clickable-row-users', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+
+        //storing workTitle to local storage
+        localStorage.setItem("name", cells[0].innerHTML);
+    }
+    
+    // //redirecting to add-work-edit
+    // window.location.href = "view-client-form.html";
+});

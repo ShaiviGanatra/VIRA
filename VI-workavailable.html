@@ -257,8 +257,8 @@
                                                     <input class="readonlytoggle form-control" type="text" placeholder="Enter reference to related work" id="relatedWork">
                                                 </div>
                                             </div>
-                                            <button type='button' class='btn btn-primary waves-effect waves-light ml-4 mr-5 float-right' onclick="Interestedcolor()" id="interestedbtn"><i class='mdi mdi-check-circle'></i> Interested</button>
-                                           
+                                            <button class='btn btn-primary ml-4 mr-5 float-right' id="interestedbtn" onclick="interestedButton()"> Interested</button>
+                                            <!-- <button class="instbtn"> Submit </button> -->
                                         </div> 
                                         </div>                                  
                                         </div>
@@ -319,11 +319,6 @@
             firebase.initializeApp(firebaseConfig);
             
         </script>
-        <script>
-            function Interestedcolor() {
-              document.getElementById("interestedbtn").style.backgroundColor = "red";
-            }
-            </script>
             
         <script src="./function.js"></script>
 
