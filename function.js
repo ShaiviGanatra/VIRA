@@ -29,6 +29,7 @@ var userCollection = database.collection('Users');
 //var personCollection = database.collection('Persons');
 var clientsCollection = database.collection('Clients');
 var workAssignedCol = database.collection('workAssigned');
+var interestCollection = database.collection('Interested');
 
 var now     = new Date(); 
 
@@ -305,6 +306,7 @@ $(document).on('click', '.custom-clickable-rowCRMworkDisplay', function(e){
 
        //storing workTitle to local storage
        localStorage.setItem("workTitle", cells[0].innerHTML);
+       
    }
    
    //redirecting to add-work-edit
@@ -423,12 +425,12 @@ $("#saveChangesWork").on("click", function() {
         "relatedWork": relatedWork.value,
         "assignedTo" : assignedTo.value,
         "points" : points.value,
-        "status": 1,
+        //"status": 1,
         "Completestatus": Assigned
         
     })
     .then(function() {
-        window.location.href = "work.html";
+       // window.location.href = "work.html";
         alert("Work Updated Succesfully");
         console.log("Work Updated Succesfully");
     });
@@ -851,30 +853,44 @@ const setupUI =(user) =>{
                 } 
                 
             })
-          
-              /**************************************Update Status Vi-for-me******************************************/
-            //   var updateStatus = document.querySelector("#updateStatus");
-            //   var statusOptions = document.getElementById("statusoptions").value;
-            //   if(updateStatus)
-            //       {
-            //           updateStatus.addEventListener("click" , async(e) =>
-            //           {
-            //                 if(statusOptions == "In Progress"){
-            //                     workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
-            //                      "Completestatus": 1
-            //                     })
-            //                 }
-            //                else if(statusOptions == "Completed"){
-            //                     workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
-            //                      "Completestatus": 2
-            //                     })
-            //                }
-            //                alert("Status updated to :" +statusOptions);
-            //           })
-            //       }
             
-
-          
+            var Interestedbtn = document.querySelector("#Interestedbtn");
+            if(Interestedbtn)
+            {
+                $("#Interestedbtn").on("click", function() {
+                    database.collection("Work").doc(localStorage.getItem("workId")).update({
+                        "status": 4
+                    })
+                    workAssignedCol.add({
+                        name : doc.data().name,
+                        selectCategory: selectCategory.value,
+                        shortCode: shortCode.value,
+                        workTitle: workTitle.value,
+                        workDescription: workDescription.value,
+                        longDescription: longDescription.value,
+                        timeRequired: parseInt(timeRequired.value),
+                        skillsRequired: skillsRequired.value,
+                        toolsRequired: toolsRequired.value,
+                        clientQuestions: clientQuestions.value,
+                        // trainingPDF: trainingPDF.value,
+                        videoTraining: videoTraining.value,
+                        workFolder: workFolder.value,
+                        workWikipedia: workWikipedia.value,
+                        assignedTo : assignedTo.value,
+                        points : points.value,
+                        relatedWork: relatedWork.value,
+                        status : 4,
+                        Completestatus: "Interested",
+                        InterestedAt: now
+                    })
+                    .then(function() {
+                        window.location.href = "VI-broadcast.html";
+                        alert("CRM will be notified about your Interest");
+                        console.log("CRM will be notified about your Interest");
+                    });
+                });
+            }
+                    
         })
     }
 }
@@ -1126,6 +1142,7 @@ $(document).on('click', '.custom-clickable-CRMWA', function(e){
 
         //storing workTitle to local storage
         localStorage.setItem("workTitle", cells[0].innerHTML);
+        alert(cells[0].innerHTML);
     }
     
     //redirecting to add-work-edit
@@ -1157,8 +1174,10 @@ query.onSnapshot(function(querySnapshot) {
             try{
                 if(change.type === "added"){
                     document.createElement("AssignedAt").innerHTML = now;
-                    document.getElementById("CRMassignedTo").innerHTML += "<div><h5>"+change.doc.data().workTitle+
-                    " --> Assigned To : "+change.doc.data().assignedTo+"</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                    if(change.doc.data().status != 4){
+                    document.getElementById("CRMassignedTo").innerHTML += "<div class='custom-clickable-CRMAssignmentTo'><h5>"+change.doc.data().workTitle+
+                    "</h5><p class='text-muted'>VI : "+change.doc.data().assignedTo+" | Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>"
+                    } 
                 }
             }catch(err){}
         });
@@ -1175,11 +1194,14 @@ query.onSnapshot(function(querySnapshot) {
             try{
                 if(change.type === "added"){
                     document.createElement("createdAt").innerHTML = now;
-                    document.getElementById("CRMworkAssignedtable").innerHTML +=
-                    "<tr><td><p class='d-inline-block align-middle mb-0'><a class='d-inline-block align-middle mb-0 product-name'>"+change.doc.data().assignedTo+
-                    "</a></p></td><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().points+"</td><td>"+change.doc.data().timeRequired+
-                    "</td><td><span class='badge badge-soft-warning'>"+change.doc.data().Completestatus+
-                    "</span></td><td><div class='btn-group'><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-edit'></i></button><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-trash-alt'></i></button> </div></td></tr>"
+                    if(change.doc.data().status != 4){
+                        document.getElementById("CRMworkAssignedtable").innerHTML +=
+                        "<tr><td><p class='d-inline-block align-middle mb-0'><a class='d-inline-block align-middle mb-0 product-name'>"+change.doc.data().assignedTo+
+                        "</a></p></td><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().points+"</td><td>"+change.doc.data().timeRequired+
+                        "</td><td><span class='badge badge-soft-warning'>"+change.doc.data().Completestatus+
+                        "</span></td><td><div class='btn-group'><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-edit'></i></button><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-trash-alt'></i></button> </div></td></tr>"
+                    }
+                    
                 }
             }catch(err){}
         });
@@ -1207,9 +1229,9 @@ query.onSnapshot(function(querySnapshot) {
 //             this.style.backgroundColor ="black";
 //             document.getElementById("interestedbtn").style.backgroundColor ="gray";
 // };
-function interestedButton(){
-    alert("CRM is notified about you !");
-}
+// function interestedButton(){
+//     alert("CRM is notified about you !");
+// }
 
 /****************************Fill Users Table****************************/
 userCollection.onSnapshot(function(querySnapshot) {
@@ -1245,3 +1267,116 @@ $(document).on('click', '.custom-clickable-row-users', function(e){
     // //redirecting to add-work-edit
     // window.location.href = "view-client-form.html";
 });
+
+
+/*******************************Fill CRM Interested div element***********************/
+var query = workAssignedCol.where("Completestatus","==","Interested");
+query.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMInterested-div") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    //document.createElement("InterestedAt").innerHTML = now.getDate()+"/"+now.getMonth()+"/"+now.getFullYear();;
+                   // if(change.doc.data().status == 4){
+                    document.getElementById("CRMInterested-div").innerHTML += "<div class='custom-clickable-CRM-VIInterested'><h5>"+change.doc.data().workTitle+"</h5><p class='text-muted'>VI : "+change.doc.data().name+" | Interested at: "+change.doc.data().InterestedAt.toDate()+"</p></div><hr>"
+                   // } 
+                }
+            }catch(err){}
+        });
+    }    
+});
+/*******************************Click CRM Assignemnet related div element***********************/
+
+$(document).on('click', '.custom-clickable-CRM-VIInterested', function(e){
+        // var url = $(this).data('href');
+        e = e || window.event;
+    
+        var target = e.srcElement || e.target;
+        while (target && target.nodeName !== "DIV") {
+            target = target.parentNode;
+        }
+        if (target) {
+            var cells = target.getElementsByTagName("h5");
+    
+            //storing workTitle to local storage
+            localStorage.setItem("workTitle", cells[0].innerHTML);
+           
+            
+        }
+        
+        //redirecting to add-work-edit
+        window.location.href = "CRM-interested.html";
+ });
+ /****************************Loading of CRM-Assignment****************************/
+
+ function fillAssignmentform() {
+     workAssignedCol.where("workTitle", "==", localStorage.getItem("workTitle"))
+     .get()
+     .then(function(querySnapshot) {
+         querySnapshot.forEach(function(doc) {
+              
+             //Make all fields of form read-only
+             $("#selectCategory").prop("disabled", true);
+             $(".readonlytoggle").prop("readonly", true);
+ 
+             //saving work id to local storage
+             localStorage.setItem("workAssignedId", doc.id);
+            
+ 
+             //Filling form with data from firebase
+             $("#selectCategory").val(doc.data().selectCategory);
+             $("#shortCode").val(doc.data().shortCode);
+             $("#workTitle").val(doc.data().workTitle);
+             $("#workDescription").val(doc.data().workDescription);
+             $("#longDescription").val(doc.data().longDescription);
+             $("#timeRequired").val(doc.data().timeRequired);
+             $("#skillsRequired").val(doc.data().skillsRequired);
+             $("#toolsRequired").val(doc.data().toolsRequired);
+             $("#clientQuestions").val(doc.data().clientQuestions);
+             $("#videoTraining").val(doc.data().videoTraining);
+             $("#workFolder").val(doc.data().workFolder);
+             $("#workWikipedia").val(doc.data().workWikipedia);
+             $("#relatedWork").val(doc.data().relatedWork);
+             $("#interestedVI").val(doc.data().name);
+             $("#assignedTo").val(doc.data().assignedTo);
+             $("#points").val(doc.data().points);
+             
+         });
+     })
+     .catch(function(error) {
+         console.log("Error getting documents: ", error);
+     });
+ }
+ /****************************Save Changes Button on Add-Work-Edit****************************/
+
+$("#AssignDone").on("click", function() {
+    
+    database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
+        "selectCategory": selectCategory.value,
+        "shortCode": shortCode.value,
+        "workTitle": workTitle.value,
+        "workDescription": workDescription.value,
+        "longDescription": longDescription.value,
+        "timeRequired": timeRequired.value,
+        "skillsRequired": skillsRequired.value,
+        "toolsRequired": toolsRequired.value,
+        "clientQuestions": clientQuestions.value,
+        "videoTraining": videoTraining.value,
+        "workFolder": workFolder.value,
+        "workWikipedia": workWikipedia.value,
+        "relatedWork": relatedWork.value,
+        "assignedTo" : assignedTo.value,
+        "points" : points.value,
+        "status": 1,
+        "Completestatus": "Assigned",
+        AssignedAt: now
+        
+    })
+    .then(function() {
+       window.location.href = "CRM-broadcast.html";
+        alert("Assignment Succesfully");
+        console.log("Assignment Succesfully");
+    });
+});
+
