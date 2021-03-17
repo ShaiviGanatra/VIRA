@@ -1199,7 +1199,7 @@ query.onSnapshot(function(querySnapshot) {
                         "<tr><td><p class='d-inline-block align-middle mb-0'><a class='d-inline-block align-middle mb-0 product-name'>"+change.doc.data().assignedTo+
                         "</a></p></td><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().points+"</td><td>"+change.doc.data().timeRequired+
                         "</td><td><span class='badge badge-soft-warning'>"+change.doc.data().Completestatus+
-                        "</span></td><td><div class='btn-group'><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-edit'></i></button><button type='button' class='btn btn-outline-secondary btn-sm'><i class='far fa-trash-alt'></i></button> </div></td></tr>"
+                        "</span></td><td><button type='button' class='btn  btn-danger btn-sm'><i class='mdi mdi-thumb-up'></i></button></td></tr>"
                     }
                     
                 }
@@ -1233,19 +1233,33 @@ query.onSnapshot(function(querySnapshot) {
 //     alert("CRM is notified about you !");
 // }
 
-/****************************Fill Users Table****************************/
+/****************************Manager Fill Users Table****************************/
 userCollection.onSnapshot(function(querySnapshot) {
     if(document.getElementById("usersDisplay") != null){
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
+                if(change.doc.data().userRole =="CRM" || change.doc.data().userRole =="VI"){
                 document.getElementById("usersDisplay").innerHTML +="<tr class='custom-clickable-row-users'><td>"+change.doc.data().name+"</td><td>"+change.doc.data().useremail+"</td><td>"
                 +change.doc.data().userSkillarr+"</td><td>"+change.doc.data().userRole+"</td></tr>"
-                
+                } 
             }
         });
     }
 });
 
+/****************************CRM Fill Users Table****************************/
+userCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("CRMusersDisplay") != null){
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                if(change.doc.data().userRole =="VI"){
+                document.getElementById("CRMusersDisplay").innerHTML +="<tr class='custom-clickable-row-users'><td>"+change.doc.data().name+"</td><td>"+change.doc.data().useremail+"</td><td>"
+                +change.doc.data().userSkillarr+"</td><td>"+change.doc.data().userRole+"</td></tr>"
+                } 
+            }
+        });
+    }
+});
 
 /****************************Store Users name on Clicking Users Table's Row****************************/
 
