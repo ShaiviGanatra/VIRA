@@ -83,10 +83,10 @@ if(addworkform != null){
                     assignedTo : assignedTo.value,
                     points : points.value,
                     relatedWork: relatedWork.value,
-                    status : 1,
-                    Completestatus: Assigned,
+                    status : 5,
+                    Completestatus: "Assigned",
                     AssignedAt: now
-                }).then(() => { window.location.href = "work.html";
+                }).then(() => {// window.location.href = "work.html";
                 console.log('Work Assigned Succesfully');
                 alert('Work Assigned Succesfully');})
             .catch(error => {console.error(error)});
@@ -404,10 +404,11 @@ $("#saveChangesWork").on("click", function() {
         "status": 1
     })
     .then(function() {
-        window.location.href = "work.html";
+        //window.location.href = "work.html";
         alert("Work Updated Succesfully");
         console.log("Work Updated Succesfully");
     });
+    
     database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
         "selectCategory": selectCategory.value,
         "shortCode": shortCode.value,
@@ -425,8 +426,8 @@ $("#saveChangesWork").on("click", function() {
         "relatedWork": relatedWork.value,
         "assignedTo" : assignedTo.value,
         "points" : points.value,
-        //"status": 1,
-        "Completestatus": Assigned
+        "status": 5,
+        "Completestatus": "Assigned"
         
     })
     .then(function() {
@@ -456,7 +457,7 @@ $("#deleteWork").on("click", function() {
         "status": 3
     })
     .then(function() {
-        window.location.href = "work.html";
+       // window.location.href = "work.html";
         alert("Work Deleted Succesfully");
         console.log("Work Deleted Succesfully");
     });
@@ -1362,7 +1363,7 @@ $(document).on('click', '.custom-clickable-CRM-VIInterested', function(e){
          console.log("Error getting documents: ", error);
      });
  }
- /****************************Save Changes Button on Add-Work-Edit****************************/
+ /****************************Save Changes Button on CRM-Interested Assign Done****************************/
 
 $("#AssignDone").on("click", function() {
     
@@ -1382,7 +1383,7 @@ $("#AssignDone").on("click", function() {
         "relatedWork": relatedWork.value,
         "assignedTo" : assignedTo.value,
         "points" : points.value,
-        "status": 1,
+        "status": 5,
         "Completestatus": "Assigned",
         AssignedAt: now
         
