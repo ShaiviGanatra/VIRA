@@ -42,6 +42,7 @@ if(addworkform != null){
         if(selectCategory.value != "" && shortCode.value != "" && workTitle.value != "" && workDescription.value != ""
         && longDescription.value != "" && parseInt(timeRequired.value) != "" && skillsRequired.value != "" && toolsRequired.value != "")
         {
+            
             workCollection.add({
                 selectCategory: selectCategory.value,
                 shortCode: shortCode.value,
@@ -60,7 +61,7 @@ if(addworkform != null){
                 status: 1,
                 createdAt: now
             })
-            .then(() => { window.location.href = "work.html";
+            .then(() => {// window.location.href = "work.html";
                 console.log('Work Inserted Succesfully');
                 alert('Work Inserted Succesfully');})
             .catch(error => {console.error(error)});
@@ -86,7 +87,9 @@ if(addworkform != null){
                     status : 5,
                     Completestatus: "Assigned",
                     AssignedAt: now
-                }).then(() => {// window.location.href = "work.html";
+                })
+                
+                .then(() => {// window.location.href = "work.html";
                 console.log('Work Assigned Succesfully');
                 alert('Work Assigned Succesfully');})
             .catch(error => {console.error(error)});
@@ -216,6 +219,28 @@ categoryCollection.onSnapshot(function(querySnapshot) {
         document.getElementById("CRMcategoryDisplay").innerHTML += '</div>'
     }    
 });
+/****************************VI Display Category****************************/
+
+var VIcategoryDisplay = document.getElementById('VIcategoryDisplay');
+
+categoryCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("VIcategoryDisplay") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("VIcategoryDisplay").innerHTML += "<div class='col-lg-6'><div class='card'><div class ='category-cardVI card-body'><h4>" + change.doc.data().categoryName + 
+                "</h4><p>" +change.doc.data().categoryShortname+"</p><p class='card-text text-muted'>" 
+                +change.doc.data().categoryDescription +"</p></div></div>"
+                if(i!=0 && i%2 == 0){
+
+                    // add end of row ,and start new row on every 2 elements
+                    document.getElementById("VIcategoryDisplay").innerHTML += '</div>'
+                  }
+            }
+        });
+        document.getElementById("VIcategoryDisplay").innerHTML += '</div>'
+    }    
+});
 /****************************Fill Select Category****************************/
 
 var sc = document.getElementById('selectCategory');
@@ -288,6 +313,21 @@ workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
         });
     }
 });
+/****************************VI Fill Work Table****************************/
+
+// database.collection("Work").where("workTitle", "==", localStorage.getItem("workTitle"))
+// var workDisplay = document.getElementById('workDisplay');
+workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
+    if(document.getElementById("VIworkDisplay") != null){
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("VIworkDisplay").innerHTML +="<tr class='custom-clickable-rowVIworkDisplay'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+                +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
+            }
+        });
+    }
+});
+
 
 
 
@@ -312,6 +352,28 @@ $(document).on('click', '.custom-clickable-rowCRMworkDisplay', function(e){
    //redirecting to add-work-edit
    window.location.href = "CRM-workavailable.html";
 });
+
+/****************************(VI)Store workTitle on Clicking Work Table's Row****************************/
+
+$(document).on('click', '.custom-clickable-rowVIworkDisplay', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+ 
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+ 
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+        
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "VI-view-work.html";
+ });
 
 
 
@@ -404,12 +466,13 @@ $("#saveChangesWork").on("click", function() {
         "status": 1
     })
     .then(function() {
-        //window.location.href = "work.html";
-        alert("Work Updated Succesfully");
-        console.log("Work Updated Succesfully");
-    });
-    
-    database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
+        // window.location.href = "work.html";
+         alert("Work Updated Succesfully");
+         console.log("Work Updated Succesfully");
+     }); 
+    if(assignedTo != "" && points.value !="") 
+    {
+    database.collection("workAssigned").add({
         "selectCategory": selectCategory.value,
         "shortCode": shortCode.value,
         "workTitle": workTitle.value,
@@ -430,11 +493,15 @@ $("#saveChangesWork").on("click", function() {
         "Completestatus": "Assigned"
         
     })
+    database.collection("Work").doc(localStorage.getItem("workId")).update({
+        "status":5
+    })
     .then(function() {
        // window.location.href = "work.html";
-        alert("Work Updated Succesfully");
-        console.log("Work Updated Succesfully");
-    });
+        alert("Work Assigned Succesfully");
+        console.log("Work Assigned Succesfully");
+    }); 
+    }
 });
 
 /****************************Delete Button on Add-Work-Edit****************************/
@@ -554,12 +621,32 @@ $(document).on('click', '.custom-clickable-h5recentlyCRM', function(e){
 });
 
 
-/*****************************Search/Filter on Work Table**********************************/
+/*****************************Manager Search/Filter on Work Table**********************************/
 
 $(document).ready(function(){
     $("#searchWorkInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $("#workDisplay tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+/*****************************CRM Search/Filter on Work Table**********************************/
+
+$(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#CRMworkDisplay tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+/*****************************VI Search/Filter on Work Table**********************************/
+
+$(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#VIworkDisplay tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
@@ -606,6 +693,27 @@ $(document).on('click', '.category-cardCRM', function(e){
 
     //redirecting to work.html
     window.location.href = "CRM-work.html";
+
+});
+/*****************************CRM Category Click -> Fitered Work wrt Category**********************************/
+
+$(document).on('click', '.category-cardVI', function(e){
+    
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h4");
+
+        //storing workTitle to local storage
+        localStorage.setItem("categoryName", cells[0].innerHTML);
+    }
+
+    //redirecting to work.html
+    window.location.href = "VI-work.html";
 
 });
 
@@ -1018,7 +1126,7 @@ $(document).on('click', '.custom-clickable-row-td', function(e){
     window.location.href = "view-client-form.html";
 });
 
-/****************************Loading of Add-Work-Edit****************************/
+/****************************Loading of Client Add-Work-Edit****************************/
 
 function fillviewClient() {
     database.collection("Clients").where("cfname", "==", localStorage.getItem("cfname"))
@@ -1143,7 +1251,7 @@ $(document).on('click', '.custom-clickable-CRMWA', function(e){
 
         //storing workTitle to local storage
         localStorage.setItem("workTitle", cells[0].innerHTML);
-        alert(cells[0].innerHTML);
+        
     }
     
     //redirecting to add-work-edit
