@@ -18,7 +18,7 @@ var relatedWork = document.getElementById('relatedWork');
 
 var assignedTo = document.getElementById('assignedTo');
 var points = document.getElementById('points');
-
+var cWorkStatus = document.getElementById('cWorkStatus');
 var addworkform = document.querySelector("#addworkform");
 var publish = document.querySelector("#publish");
 var saveDraft = document.querySelector("#saveDraft");
@@ -428,6 +428,7 @@ function fillAddWorkEdit() {
 
             $("#assignedTo").val(doc.data().assignedTo);
             $("#points").val(doc.data().points);
+            $("#cWorkStatus").val(doc.data().Completestatus);
         });
     })
     .catch(function(error) {
@@ -490,13 +491,13 @@ $("#saveChangesWork").on("click", function() {
         "assignedTo" : assignedTo.value,
         "points" : points.value,
         "status": 5,
-        "Completestatus": "Assigned"
+        "Completestatus": "Assigned",
+        "AssignedAt": now
         
-    })
-    database.collection("Work").doc(localStorage.getItem("workId")).update({
-        "status":5
-    })
-    .then(function() {
+    }).then(function() {
+        database.collection("Work").doc(localStorage.getItem("workId")).update({
+            "status":5
+        })
        // window.location.href = "work.html";
         alert("Work Assigned Succesfully");
         console.log("Work Assigned Succesfully");
@@ -1067,7 +1068,8 @@ var caddinfo = document.getElementById('caddinfo');
 //Add Category Function
 if(document.getElementById("saveClientForm")){
     document.getElementById("saveClientForm").addEventListener('click', e =>
-{
+    {
+        if(cfname.value != "" && clname.value != "" && cemail.value != "" && cmobilenum.value != "" && corganization.value != "" && cdepartment.value != "" && caddress.value != ""){
     e.preventDefault();
     clientsCollection.add({
         cfname: cfname.value,
@@ -1086,6 +1088,12 @@ if(document.getElementById("saveClientForm")){
 
     })
     .catch(error => {console.error(error)});
+    }
+    else{
+        console.log("Must fill all the Mandatory (* marked) Inputs");
+        alert('Must fill all the Mandatory (* marked) Inputs');
+    }
+
 });
 }
 
