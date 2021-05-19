@@ -1310,13 +1310,15 @@ query.onSnapshot(function(querySnapshot) {
         querySnapshot.docChanges().forEach(function(change,i){
             try{
                 if(change.type === "added"){
+                    
                     document.createElement("createdAt").innerHTML = now;
-                    if(change.doc.data().status != 4){
+                    if(change.doc.data().status != 4 && change.doc.data().status != 6){
+                        localStorage.setItem("workAssignedId", change.doc.id);
                         document.getElementById("CRMworkAssignedtable").innerHTML +=
-                        "<tr><td><p class='d-inline-block align-middle mb-0'><a class='d-inline-block align-middle mb-0 product-name'>"+change.doc.data().assignedTo+
+                        "<tr class='custom-clickable-crm-done'><td><p class='d-inline-block align-middle mb-0'><a class='d-inline-block align-middle mb-0 product-name'>"+change.doc.data().assignedTo+
                         "</a></p></td><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().points+"</td><td>"+change.doc.data().timeRequired+
                         "</td><td><span class='badge badge-soft-warning'>"+change.doc.data().Completestatus+
-                        "</span></td><td><button type='button' class='btn  btn-danger btn-sm'><i class='mdi mdi-thumb-up'></i></button></td></tr>"
+                        "</span></td></tr>"
                     }
                     
                 }
@@ -1324,31 +1326,51 @@ query.onSnapshot(function(querySnapshot) {
         });
     }    
 });
+/*********************************CRM - done ************************************************/
+$(document).on('click', '.custom-clickable-crm-done', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
 
-/*****************************Change Color after clicking on Interested button**********************************/
-
-// document.querySelectorAll('#interestedbtn').forEach(function(e) {
-//     e.addEventListener('click', function() {
-//       this.style.backgroundColor = "red";
-//     })
-//   });
-// function interestedButton(_this) {
-//     _this.style.backgroundColor = "yellow";
-//   }
-
-// let interestedButton = document.querySelector('#interestedbtn');
-// interestedButton.addEventListener("click", () => interestedButton.style.backgroundColor='yellow')
-
-// document.getElementById("interestedbtn").style.backgroundColor ="light-blue";
-
-
-// document.getElementById("interestedbtn").onclick = function(){
-//             this.style.backgroundColor ="black";
-//             document.getElementById("interestedbtn").style.backgroundColor ="gray";
-// };
-// function interestedButton(){
-//     alert("CRM is notified about you !");
-// }
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+       
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[1].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "CRM-done-form.html";
+});
+/***********************************On clicking Work done button****************************************/
+var WorkDone = document.querySelector("#workDone");
+var Completestatus = document.getElementById('cWorkStatus');
+if(WorkDone)
+{
+    
+$("#workDone").on("click", function() {
+    if(Completestatus.value == "Completed"){
+    
+    database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
+        "status": 6,//Work done
+         "Completestatus" : "Done"
+    })
+    .then(function() {
+       
+        alert("Work Done Succesfully");
+        console.log("Work Done Succesfully");
+        window.location.href = "CRM-dashboard.html";
+    });
+    }
+    else{
+            alert("The Work should be completed");
+            console.log("The Work should be completed"); 
+        } 
+});
+}
 
 /****************************Manager Fill Users Table****************************/
 userCollection.onSnapshot(function(querySnapshot) {
@@ -1472,6 +1494,7 @@ $(document).on('click', '.custom-clickable-CRM-VIInterested', function(e){
              $("#interestedVI").val(doc.data().name);
              $("#assignedTo").val(doc.data().assignedTo);
              $("#points").val(doc.data().points);
+             $("#cWorkStatus").val(doc.data().Completestatus);
              
          });
      })
