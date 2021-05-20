@@ -944,7 +944,7 @@ const setupUI =(user) =>{
         
             var query = workAssignedCol.orderBy("AssignedAt","desc");
             query.onSnapshot(function(querySnapshot) {
-                if(document.getElementById("forMe") != null){
+                    if(document.getElementById("forMe") != null){
                     // doc.data() is never undefined for query doc snapshots
                     querySnapshot.docChanges().forEach(function(change,i){
                         /***************************Display in For me Section***********************************************/
@@ -958,9 +958,73 @@ const setupUI =(user) =>{
                                     "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
                                 }
                             }catch(err){}
+                           
+
                         }
                     });
                 } 
+                
+                    querySnapshot.docChanges().forEach(function(change,i){
+                        //if(change.doc.data().Completestatus == "Done"){
+                            
+                        var WorkDone = document.querySelector("#workDone");
+                        var Completestatus = document.getElementById('cWorkStatus');
+                        if(WorkDone)
+                        {
+                            
+                        $("#workDone").on("click", function() {
+                            if(Completestatus.value == "Completed"){
+                            
+                            database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
+                                "status": 6,//Work done
+                                "Completestatus" : "Done"
+                            })
+                            .then(function() {
+                               // alert(database.collection('Users').doc('RnhKOp2N8VfoJJUSxcgyKykuc6T2').get().then((doc) => { doc.data.toString()}));
+                                alert("Work Done Succesfully");
+                                console.log("Work Done Succesfully");
+                                window.location.href = "CRM-dashboard.html";
+                                // if(doc.data().name == change.doc.data().assignedTo)
+                                // {
+                                //alert("haha");
+                                // var tasksCompleted , hrsWork , Karma;
+                                // tasksCompleted +=  doc.data().taskscompleted + 1; 
+                                // hrsWork += doc.data().hrswork + timeRequired.value;
+                                // Karma += doc.data().karma + change.doc.data().points;
+                                // alert(tasksCompleted);
+                                // alert(timeRequired.value);
+                                // alert(Karma);
+                                //hrsWork += timeRequired.value;
+                                //Karma += points.value;
+                                
+                                // database.collection("Users").doc(localStorage.getItem("userId")).update({
+                                //     taskscompleted : 1,
+                                //     hrswork : 1,
+                                //     karma : 1
+                                    
+                                //     // taskscompleted : taskscompleted+1,
+                                //     // hrswork : hrswork+timeRequired.value,
+                                //     // karma : karma+points.value
+                                    
+                                // }).catch(error => {
+                                //     alert(error);
+                                //     console.log(error)});
+                               // }
+                            });
+                            }
+                            else{
+                                    alert("The Work should be completed");
+                                    console.log("The Work should be completed"); 
+                                } 
+                        });  
+
+
+                      
+                    }
+                //}
+            });
+
+                
                 
             })
             
@@ -1044,7 +1108,12 @@ if(document.getElementById("saveUserForm"))
             name : document.getElementById('name').value,
             // lastname : document.getElementById('lname').value,
             userSkillarr : firebase.firestore.FieldValue.arrayUnion(...[userskillset]),
-            userRole : document.getElementById('userRole').value
+            userRole : document.getElementById('userRole').value,
+            taskscompleted : 0,
+            hrswork : 0,
+            taskspending :0,
+            karma : 0,
+            earned :0
 
        });
        
@@ -1128,6 +1197,7 @@ $(document).on('click', '.custom-clickable-row-td', function(e){
 
         //storing workTitle to local storage
         localStorage.setItem("cfname", cells[0].innerHTML);
+        //alert(cells[0].innerHTML)
     }
     
     //redirecting to add-work-edit
@@ -1315,8 +1385,7 @@ query.onSnapshot(function(querySnapshot) {
                     if(change.doc.data().status != 4 && change.doc.data().status != 6){
                         localStorage.setItem("workAssignedId", change.doc.id);
                         document.getElementById("CRMworkAssignedtable").innerHTML +=
-                        "<tr class='custom-clickable-crm-done'><td><p class='d-inline-block align-middle mb-0'><a class='d-inline-block align-middle mb-0 product-name'>"+change.doc.data().assignedTo+
-                        "</a></p></td><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().points+"</td><td>"+change.doc.data().timeRequired+
+                        "<tr class='custom-clickable-crm-done'><td>"+change.doc.data().assignedTo+"</td><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().points+"</td><td>"+change.doc.data().timeRequired+
                         "</td><td><span class='badge badge-soft-warning'>"+change.doc.data().Completestatus+
                         "</span></td></tr>"
                     }
@@ -1340,12 +1409,15 @@ $(document).on('click', '.custom-clickable-crm-done', function(e){
        
         //storing workTitle to local storage
         localStorage.setItem("workTitle", cells[1].innerHTML);
+        //alert(cells[0].innerHTML);
+        localStorage.setItem("assignedTo", cells[0].innerHTML);
     }
     
     //redirecting to add-work-edit
     window.location.href = "CRM-done-form.html";
 });
 /***********************************On clicking Work done button****************************************/
+/*
 var WorkDone = document.querySelector("#workDone");
 var Completestatus = document.getElementById('cWorkStatus');
 if(WorkDone)
@@ -1371,7 +1443,7 @@ $("#workDone").on("click", function() {
         } 
 });
 }
-
+*/
 /****************************Manager Fill Users Table****************************/
 userCollection.onSnapshot(function(querySnapshot) {
     if(document.getElementById("usersDisplay") != null){
