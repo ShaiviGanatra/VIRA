@@ -914,6 +914,10 @@ loginForm.addEventListener('click',(e)=>{
             {
                 window.location.href = "VI-dashboard.html";
             }
+            else if(doc.data().userRole == "External-VI")
+            {
+                window.location.href = "VI-dashboard.html";
+            }
             else{
                 window.location.href = "dashboard.html"; 
             }
@@ -950,16 +954,25 @@ const setupUI =(user) =>{
                         /***************************Display in For me Section***********************************************/
                         if(doc.data().name == change.doc.data().assignedTo)
                         {
-
-                            try{
-                                if(change.type === "added"){
-                                    document.createElement("AssignedAt").innerHTML = now;
-                                    document.getElementById("forMe").innerHTML += "<div class='custom-clickable-forMe'><h5>"+change.doc.data().workTitle+
-                                    "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                            if(doc.data().userRole == "External-VI"){
+                                try{
+                                    if(change.type === "added"){
+                                        if(change.doc.data().Completestatus != "Rejected"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("forMe").innerHTML += "<div class='custom-clickable-EVIforMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
                                 }
-                            }catch(err){}
-                           
-
+                                }catch(err){}  
+                            }else{
+                                try{
+                                    if(change.type === "added"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("forMe").innerHTML += "<div class='custom-clickable-forMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
+                                }catch(err){}
+                            }
                         }
                     });
                 } 
@@ -1296,6 +1309,27 @@ $(document).on('click', '.custom-clickable-forMe', function(e){
     window.location.href = "VI-for-me.html";
 });
 
+/*****************************Click on forMe  WorkTitle for External VI**********************************/
+
+$(document).on('click', '.custom-clickable-EVIforMe', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "EVI-for-me.html";
+});
+
 /*****************************CRM Work Avialable Title**********************************/
 
 // var recentlyAdded = document.getElementById('recentlyAdded');
@@ -1449,7 +1483,7 @@ userCollection.onSnapshot(function(querySnapshot) {
     if(document.getElementById("usersDisplay") != null){
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
-                if(change.doc.data().userRole =="CRM" || change.doc.data().userRole =="VI"){
+                if(change.doc.data().userRole =="CRM" || change.doc.data().userRole =="VI" || change.doc.data().userRole =="External-VI"){
                 document.getElementById("usersDisplay").innerHTML +="<tr class='custom-clickable-row-users'><td>"+change.doc.data().name+"</td><td>"+change.doc.data().useremail+"</td><td>"
                 +change.doc.data().userSkillarr+"</td><td>"+change.doc.data().userRole+"</td></tr>"
                 } 
@@ -1463,7 +1497,7 @@ userCollection.onSnapshot(function(querySnapshot) {
     if(document.getElementById("CRMusersDisplay") != null){
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
-                if(change.doc.data().userRole =="VI"){
+                if(change.doc.data().userRole =="VI" || change.doc.data().userRole =="External-VI"){
                 document.getElementById("CRMusersDisplay").innerHTML +="<tr class='custom-clickable-row-users'><td>"+change.doc.data().name+"</td><td>"+change.doc.data().useremail+"</td><td>"
                 +change.doc.data().userSkillarr+"</td><td>"+change.doc.data().userRole+"</td></tr>"
                 } 
@@ -1531,7 +1565,7 @@ $(document).on('click', '.custom-clickable-CRM-VIInterested', function(e){
         }
         
         //redirecting to add-work-edit
-        window.location.href = "CRM-interested.html";
+        window.location.href = "CRM-assign.html";
  });
  /****************************Loading of CRM-Assignment****************************/
 
@@ -1606,3 +1640,40 @@ $("#AssignDone").on("click", function() {
     });
 });
 
+/****************************External VI Reject Work****************************/
+if(document.getElementById("rejectWork")){
+    document.getElementById("rejectWork").addEventListener('click', e =>
+    {
+    e.preventDefault();
+    database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
+        "status": 7, //7 is rejected work
+        "Completestatus": "Rejected"
+    })
+    .then(() => { 
+        confirm('Work Rejected Succesfully and notified to CRM');
+        window.location.href = "VI-broadcast.html";
+        
+})
+    .catch(error => {console.error(error)});
+    }
+    )
+}
+
+
+/*******************************Fill CRM Rejcted div element***********************/
+var rejectquery = workAssignedCol;
+rejectquery.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("VIRejected-div") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            try{
+                if(change.type === "added"){
+                    //document.createElement("InterestedAt").innerHTML = now.getDate()+"/"+now.getMonth()+"/"+now.getFullYear();;
+                   if(change.doc.data().status == 7){
+                    document.getElementById("VIRejected-div").innerHTML += "<div class='custom-clickable-CRM-VIInterested'><h5>"+change.doc.data().workTitle+"</h5><p class='text-muted'>VI : "+change.doc.data().assignedTo+"</p></div><hr>"
+                   } 
+                }
+            }catch(err){}
+        });
+    }    
+});

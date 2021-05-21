@@ -273,7 +273,9 @@
                                                 </select>
                                             </div> 
                                             </div>
-                                           
+                                            <!--<button type="button" class="btn btn-primary ml-4 mr-5 btn-group float-right" id="updateStatus">Update Status</button>-->
+                                            <button type="submit" class="btn btn-danger ml-4 mr-5 btn-group float-right" id="rejectWork">Reject</button>
+                                            <!-- <button type="submit" class="btn btn-success ml-4 mr-5 btn-group float-right" id="publish" onchange = "acceptwork()">Accept</button> -->
                                         </div> 
                                         </div>                                  
                                         </div>
@@ -337,6 +339,7 @@
          <script>
             
             var database = firebase.firestore();
+            var workCollection = database.collection('Work');
             var workAssignedCol = database.collection('workAssigned');
                 function myStatus() {
                     var statusOptions = document.getElementById("statusoptions").value;
@@ -345,7 +348,7 @@
                                 "Completestatus": "In Progress"
                             }).then(() => { 
                                 // alert('Work Rejected Succesfully and notified to CRM');
-                                window.location.href = "VI-for-me.html";
+                                window.location.href = "EVI-for-me.html";
                             })
                         }
                         else if(statusOptions == "Completed"){
@@ -353,7 +356,7 @@
                                  "Completestatus": "Completed"
                                  }).then(() => { 
                                 // alert('Work Rejected Succesfully and notified to CRM');
-                                window.location.href = "VI-for-me.html";
+                                window.location.href = "EVI-for-me.html";
                             })
                         }
                         // else {
@@ -363,6 +366,7 @@
                         // }
                         alert("Status updated to :" +statusOptions);
                   }
+                  
             </script>
         <script src="./function.js"></script>
 
