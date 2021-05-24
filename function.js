@@ -449,6 +449,7 @@ $("#editWork").on("click", function() {
 /****************************Save Changes Button on Add-Work-Edit****************************/
 
 $("#saveChangesWork").on("click", function() {
+    if(confirm("Save Work ?")){
     database.collection("Work").doc(localStorage.getItem("workId")).update({
         "selectCategory": selectCategory.value,
         "shortCode": shortCode.value,
@@ -501,8 +502,13 @@ $("#saveChangesWork").on("click", function() {
        // window.location.href = "work.html";
         alert("Work Assigned Succesfully");
         console.log("Work Assigned Succesfully");
-    }); 
+        window.location.href = "CRM-broadcast.html"
+    });
+}
     }
+    else{
+        window.location.href = "CRM-workavailable.html"
+    } 
 });
 
 /****************************Delete Button on Add-Work-Edit****************************/
@@ -521,6 +527,7 @@ $("#saveChangesWork").on("click", function() {
 
 //code to just change status of entry in firebase
 $("#deleteWork").on("click", function() {
+    if(confirm("Delete Work ?")){
     database.collection("Work").doc(localStorage.getItem("workId")).update({
         "status": 3
     })
@@ -528,7 +535,12 @@ $("#deleteWork").on("click", function() {
        // window.location.href = "work.html";
         alert("Work Deleted Succesfully");
         console.log("Work Deleted Succesfully");
+        window.location.href = "CRM-broadcast.html";
+
     });
+}else{
+    window.location.href = "CRM-workavailable.html";
+}
 });
 
 /****************************Pagination****************************/
@@ -976,7 +988,7 @@ const setupUI =(user) =>{
                         }
                     });
                 } 
-                
+  /*              
                     querySnapshot.docChanges().forEach(function(change,i){
                         //if(change.doc.data().Completestatus == "Done"){
                             
@@ -987,7 +999,7 @@ const setupUI =(user) =>{
                             
                         $("#workDone").on("click", function() {
                             if(Completestatus.value == "Completed"){
-                            
+                            if(confirm("Are you sure the work is done ?")){
                             database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
                                 "status": 6,//Work done
                                 "Completestatus" : "Done"
@@ -1024,6 +1036,10 @@ const setupUI =(user) =>{
                                 //     console.log(error)});
                                // }
                             });
+                        }
+                        else{
+                            window.location.href = "CRM-done-form.html";
+                        }
                             }
                             else{
                                     alert("The Work should be completed");
@@ -1036,7 +1052,7 @@ const setupUI =(user) =>{
                     }
                 //}
             });
-
+*/
                 
                 
             })
@@ -1044,7 +1060,9 @@ const setupUI =(user) =>{
             var Interestedbtn = document.querySelector("#Interestedbtn");
             if(Interestedbtn)
             {
+                
                 $("#Interestedbtn").on("click", function() {
+                    if(confirm("Are you sure you are interested to do the work ?")){
                     database.collection("Work").doc(localStorage.getItem("workId")).update({
                         "status": 4
                     })
@@ -1075,6 +1093,9 @@ const setupUI =(user) =>{
                         alert("CRM will be notified about your Interest");
                         console.log("CRM will be notified about your Interest");
                     });
+                }else{
+                    window.location.href = "VI-workavailable.html";
+                }
                 });
             }
                     
@@ -1451,7 +1472,7 @@ $(document).on('click', '.custom-clickable-crm-done', function(e){
     window.location.href = "CRM-done-form.html";
 });
 /***********************************On clicking Work done button****************************************/
-/*
+
 var WorkDone = document.querySelector("#workDone");
 var Completestatus = document.getElementById('cWorkStatus');
 if(WorkDone)
@@ -1459,7 +1480,7 @@ if(WorkDone)
     
 $("#workDone").on("click", function() {
     if(Completestatus.value == "Completed"){
-    
+        if(confirm("Are you sure the work is done ?")){
     database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
         "status": 6,//Work done
          "Completestatus" : "Done"
@@ -1470,14 +1491,17 @@ $("#workDone").on("click", function() {
         console.log("Work Done Succesfully");
         window.location.href = "CRM-dashboard.html";
     });
+    }else{
+        window.location.href = "CRM-dashboard.html";
     }
+}
     else{
             alert("The Work should be completed");
             console.log("The Work should be completed"); 
         } 
 });
 }
-*/
+
 /****************************Manager Fill Users Table****************************/
 userCollection.onSnapshot(function(querySnapshot) {
     if(document.getElementById("usersDisplay") != null){
@@ -1611,7 +1635,7 @@ $(document).on('click', '.custom-clickable-CRM-VIInterested', function(e){
  /****************************Save Changes Button on CRM-Interested Assign Done****************************/
 
 $("#AssignDone").on("click", function() {
-    
+    if(confirm("Are you sure you want to assign the work ?")){
     database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
         "selectCategory": selectCategory.value,
         "shortCode": shortCode.value,
@@ -1637,7 +1661,11 @@ $("#AssignDone").on("click", function() {
        window.location.href = "CRM-broadcast.html";
         alert("Assignment Succesfully");
         console.log("Assignment Succesfully");
+        window.location.href = "CRM-broadcast.html";
     });
+}else{
+    window.location.href = "CRM-assign.html";
+}
 });
 
 /****************************External VI Reject Work****************************/
@@ -1645,16 +1673,22 @@ if(document.getElementById("rejectWork")){
     document.getElementById("rejectWork").addEventListener('click', e =>
     {
     e.preventDefault();
-    database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
-        "status": 7, //7 is rejected work
-        "Completestatus": "Rejected"
+    if(confirm("Are you sure that you want to reject the work ?")){
+        database.collection("workAssigned").doc(localStorage.getItem("workAssignedId")).update({
+            "status": 7, //7 is rejected work
+            "Completestatus": "Rejected"
+        })
+        .then(() => { 
+            alert('Work Rejected Succesfully and notified to CRM');
+            window.location.href = "VI-broadcast.html";
+            
     })
-    .then(() => { 
-        confirm('Work Rejected Succesfully and notified to CRM');
-        window.location.href = "VI-broadcast.html";
-        
-})
-    .catch(error => {console.error(error)});
+        .catch(error => {console.error(error)});    
+    }
+    else{
+        window.location.href = "EVI-for-me.html";
+    }
+    
     }
     )
 }
