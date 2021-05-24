@@ -63,7 +63,8 @@ if(addworkform != null){
             })
             .then(() => {// window.location.href = "work.html";
                 console.log('Work Inserted Succesfully');
-                alert('Work Inserted Succesfully');})
+                alert('Work Inserted Succesfully');
+            })
             .catch(error => {console.error(error)});
             if(assignedTo != "" && points.value !="") 
             {
@@ -166,8 +167,9 @@ if(document.getElementById("submitCategory")){
         categoryDescription: categoryDescription.value
     })
     .then(() => { window.location.href = "directory.html";
+        alert("Category Inserted Succesfully");
         console.log('Category Inserted Succesfully');
-        window.location.href = "add-category.html";
+        // window.location.href = "add-category.html";
 
     })
     .catch(error => {console.error(error)});
@@ -979,10 +981,102 @@ const setupUI =(user) =>{
                             }else{
                                 try{
                                     if(change.type === "added"){
+                                        if(change.doc.data().Completestatus != "Done"){
                                         document.createElement("AssignedAt").innerHTML = now;
                                         document.getElementById("forMe").innerHTML += "<div class='custom-clickable-forMe'><h5>"+change.doc.data().workTitle+
                                         "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
                                     }
+                                }
+                                }catch(err){}
+                            }
+                        }
+                    });
+                } 
+                if(document.getElementById("assignedWork") != null){
+                    // doc.data() is never undefined for query doc snapshots
+                    querySnapshot.docChanges().forEach(function(change,i){
+                        /***************************Display in For me Section***********************************************/
+                        if(doc.data().name == change.doc.data().assignedTo)
+                        {
+                            if(doc.data().userRole == "VI"){
+                                try{
+                                    if(change.type === "added"){
+                                        if(change.doc.data().Completestatus == "Assigned"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("assignedWork").innerHTML += "<div class='custom-clickable-forMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
+                                }
+                                }catch(err){}  
+                            }else{
+                                try{
+                                    if(change.type === "added"){
+                                        if(change.doc.data().Completestatus == "Assigned"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("assignedWork").innerHTML += "<div class='custom-clickable-EVIforMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
+                                }
+                                }catch(err){}
+                            }
+                        }
+                    });
+                } 
+                if(document.getElementById("inProgressWork") != null){
+                    // doc.data() is never undefined for query doc snapshots
+                    querySnapshot.docChanges().forEach(function(change,i){
+                        /***************************Display in For me Section***********************************************/
+                        if(doc.data().name == change.doc.data().assignedTo)
+                        {
+                            if(doc.data().userRole == "VI"){
+                                try{
+                                    if(change.type === "added"){
+                                        if(change.doc.data().Completestatus == "In Progress"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("inProgressWork").innerHTML += "<div class='custom-clickable-forMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
+                                }
+                                }catch(err){}  
+                            }else{
+                                try{
+                                    if(change.type === "added"){
+                                        if(change.doc.data().Completestatus == "In Progress"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("inProgressWork").innerHTML += "<div class='custom-clickable-EVIforMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
+                                }
+                                }catch(err){}
+                            }
+                        }
+                    });
+                } 
+                if(document.getElementById("completedWork") != null){
+                    // doc.data() is never undefined for query doc snapshots
+                    querySnapshot.docChanges().forEach(function(change,i){
+                        /***************************Display in For me Section***********************************************/
+                        if(doc.data().name == change.doc.data().assignedTo)
+                        {
+                            if(doc.data().userRole == "VI"){
+                                try{
+                                    if(change.type === "added"){
+                                        if(change.doc.data().Completestatus == "Completed"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("completedWork").innerHTML += "<div class='custom-clickable-forMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
+                                }
+                                }catch(err){}  
+                            }else{
+                                try{
+                                    if(change.type === "added"){
+                                        if(change.doc.data().Completestatus == "Completed"){
+                                        document.createElement("AssignedAt").innerHTML = now;
+                                        document.getElementById("completedWork").innerHTML += "<div class='custom-clickable-EVIforMe'><h5>"+change.doc.data().workTitle+
+                                        "</h5><p class='text-muted'>Assigned at: "+change.doc.data().AssignedAt.toDate()+"</p></div><hr>" 
+                                    }
+                                }
                                 }catch(err){}
                             }
                         }
@@ -1350,6 +1444,49 @@ $(document).on('click', '.custom-clickable-EVIforMe', function(e){
     //redirecting to add-work-edit
     window.location.href = "EVI-for-me.html";
 });
+
+/*****************************Click on Assigned Work for VI**********************************/
+
+$(document).on('click', '.custom-clickable-VIAssignedWork', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "VI-for-me.html";
+});
+
+/*****************************Click on In Progress Work for VI**********************************/
+
+$(document).on('click', '.custom-clickable-VIAssignedWork', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "DIV") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("h5");
+
+        //storing workTitle to local storage
+        localStorage.setItem("workTitle", cells[0].innerHTML);
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "VI-for-me.html";
+});
+
 
 /*****************************CRM Work Avialable Title**********************************/
 
