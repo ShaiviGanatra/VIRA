@@ -18,7 +18,7 @@
         <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
 
     </head>
-    <body>
+    <body onload="searchWork()">
             <!-- Top Bar Start -->
             <div class="topbar">
                 <!-- Navbar -->
@@ -148,6 +148,14 @@
                         <div class="col-lg-12">
                                  <div class="card-body">        
                                     <h1 class="header-title d-inline-block">Category</h1>
+                                    <ul class="list-unstyled topbar-nav mb-0 float-right">
+                                        <li class="hide-phone app-search">
+                                            <form onSubmit="return false;">
+                                                <input type="text" placeholder="Search..." class="form-control" id="searchWorkInput">
+                                                <a href=""><i class="fas fa-search"></i></a>
+                                            </form>
+                                        </li>
+                                    </ul> 
                                            <!-- <button type="submit" class="btn btn-primary ml-4 mr-5 btn-group float-right" id="addCategory"><a href="add-category.html"> Add Category </a></button> -->
                                     </div>                                                                      
                                 </div><!--end card-body-->

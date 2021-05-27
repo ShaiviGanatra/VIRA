@@ -40,7 +40,7 @@ if(addworkform != null){
     {
         e.preventDefault();
         if(selectCategory.value != "" && shortCode.value != "" && workTitle.value != "" && workDescription.value != ""
-        && longDescription.value != "" && parseInt(timeRequired.value) != "" && skillsRequired.value != "" && toolsRequired.value != "")
+        && longDescription.value != "" && parseFloat(timeRequired.value) != "" && skillsRequired.value != "" && toolsRequired.value != "")
         {
             
             workCollection.add({
@@ -49,7 +49,7 @@ if(addworkform != null){
                 workTitle: workTitle.value,
                 workDescription: workDescription.value,
                 longDescription: longDescription.value,
-                timeRequired: parseInt(timeRequired.value),
+                timeRequired: parseFloat(timeRequired.value),
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -66,7 +66,7 @@ if(addworkform != null){
                 alert('Work Inserted Succesfully');
             })
             .catch(error => {console.error(error)});
-            if(assignedTo != "" && points.value !="") 
+            if(assignedTo.value !== null && assignedTo.value !== '' &&  assignedTo.value !== "Select User" && points.value !="") 
             {
                 workAssignedCol.add({
                     selectCategory: selectCategory.value,
@@ -74,7 +74,7 @@ if(addworkform != null){
                     workTitle: workTitle.value,
                     workDescription: workDescription.value,
                     longDescription: longDescription.value,
-                    timeRequired: parseInt(timeRequired.value),
+                    timeRequired: parseFloat(timeRequired.value),
                     skillsRequired: skillsRequired.value,
                     toolsRequired: toolsRequired.value,
                     clientQuestions: clientQuestions.value,
@@ -120,7 +120,7 @@ if(addworkform != null){
                 workTitle: workTitle.value,
                 workDescription: workDescription.value,
                 longDescription: longDescription.value,
-                timeRequired: parseInt(timeRequired.value),
+                timeRequired: parseFloat(timeRequired.value),
                 skillsRequired: skillsRequired.value,
                 toolsRequired: toolsRequired.value,
                 clientQuestions: clientQuestions.value,
@@ -391,8 +391,8 @@ function fillAddWorkEdit() {
 
             //Make all fields of form read-only
             $("#selectCategory").prop("disabled", true);
-            $(".readonlytoggle").prop("readonly", true);
-
+             $(".readonlytoggle").prop("readonly", true);
+            $("#assignedTo").prop("disabled", true);
             //saving work id to local storage
             localStorage.setItem("workId", doc.id);
            
@@ -427,6 +427,8 @@ function fillAddWorkEdit() {
             //Make all fields of form read-only
             $("#selectCategory").prop("disabled", true);
             $(".readonlytoggle").prop("readonly", true);
+            $("#assigendTo").prop("disabled", true);
+            $(".readonlytoggle").prop("readonly", true);
 
             $("#assignedTo").val(doc.data().assignedTo);
             $("#points").val(doc.data().points);
@@ -445,6 +447,8 @@ $("#editWork").on("click", function() {
     alert("Now the fields are editable");
     //Make all fields editable
     $("#selectCategory").prop("disabled", false);
+     $(".readonlytoggle").prop("readonly", false);
+    $("#assignedTo").prop("disabled", false);
     $(".readonlytoggle").prop("readonly", false);
   });
 
@@ -458,7 +462,7 @@ $("#saveChangesWork").on("click", function() {
         "workTitle": workTitle.value,
         "workDescription": workDescription.value,
         "longDescription": longDescription.value,
-        "timeRequired": timeRequired.value,
+        "timeRequired": parseFloat(timeRequired.value),
         "skillsRequired": skillsRequired.value,
         "toolsRequired": toolsRequired.value,
         "clientQuestions": clientQuestions.value,
@@ -646,12 +650,28 @@ $(document).ready(function(){
       });
     });
   });
+  $(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#mylistworkDisplay tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
 /*****************************CRM Search/Filter on Work Table**********************************/
 
 $(document).ready(function(){
     $("#searchWorkInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $("#CRMworkDisplay tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  $(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#CRMmylistworkDisplay tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
@@ -666,6 +686,28 @@ $(document).ready(function(){
       });
     });
   });
+
+/*****************************Manager Search/Filter on Work Category**********************************/
+
+$(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#categoryDisplay div").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+/*****************************Manager Search/Filter on Work Category**********************************/
+
+$(document).ready(function(){
+    $("#searchWorkInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#CRMcategoryDisplay div").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });  
 
 /*****************************Manager Category Click -> Fitered Work wrt Category**********************************/
 
@@ -1167,7 +1209,7 @@ const setupUI =(user) =>{
                         workTitle: workTitle.value,
                         workDescription: workDescription.value,
                         longDescription: longDescription.value,
-                        timeRequired: parseInt(timeRequired.value),
+                        timeRequired: parseFloat(timeRequired.value),
                         skillsRequired: skillsRequired.value,
                         toolsRequired: toolsRequired.value,
                         clientQuestions: clientQuestions.value,
@@ -1738,8 +1780,8 @@ $(document).on('click', '.custom-clickable-CRM-VIInterested', function(e){
               
              //Make all fields of form read-only
              $("#selectCategory").prop("disabled", true);
-             $(".readonlytoggle").prop("readonly", true);
- 
+              $(".readonlytoggle").prop("readonly", true);
+             $("#assignedTo").prop("disabled", true);
              //saving work id to local storage
              localStorage.setItem("workAssignedId", doc.id);
             
@@ -1848,3 +1890,53 @@ rejectquery.onSnapshot(function(querySnapshot) {
         });
     }    
 });
+
+/****************************Fill Assigned To Dropdown****************************/
+
+var sc = document.getElementById('assignedTo');
+
+userCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("assignedTo") != null){
+        // doc.data() is never undefined for query doc snapshots
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                if(change.doc.data().userRole == "VI" || change.doc.data().userRole == "External-VI"){
+               document.getElementById("assignedTo").innerHTML += "<option>" + change.doc.data().name + "</option>"
+            }
+        }
+        });
+    }
+});
+
+/****************************Category Code on Clicking Category Option****************************/
+
+// $(document).on('click', '.custom-clickable-shortCodeCategory', function(e){
+//     // var url = $(this).data('href');
+//     alert("wihefnkjd");
+//     e = e || window.event;
+    
+//     var target = e.srcElement || e.target;
+//     while (target && target.nodeName !== "select") {
+//         target = target.parentNode;
+//     }
+//     if (target) {
+//         var cells = target.getElementsByTagName("option");
+//         alert("wihefnkjd");
+//         //storing workTitle to local storage
+//         localStorage.setItem("categoryName", cells[0].innerHTML);
+        
+//     }
+    
+//     //redirecting to add-work-edit
+//     // window.location.href = "CRM-workavailable.html";
+//  });
+
+// database.collection("Category").where("categoryName", "==", localStorage.getItem("categoryName")).onSnapshot(function(querySnapshot) {
+//     if(document.getElementById("shortCodeCat") != null){
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("shortCodeCat").innerHTML += change.doc.data().categoryShortname;
+//             }
+//         });
+//     }
+// });
