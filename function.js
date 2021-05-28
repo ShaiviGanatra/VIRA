@@ -1337,13 +1337,13 @@ if(document.getElementById("saveClientForm")){
 }
 
 
-/****************************Fill Client Table****************************/
+/****************************CRM Fill Client Table****************************/
 
 clientsCollection.onSnapshot(function(querySnapshot) {
-    if(document.getElementById("clientDisplay") != null){
+    if(document.getElementById("CRMclientDisplay") != null){
         querySnapshot.docChanges().forEach(function(change,i){
             if(change.type === "added"){
-                document.getElementById("clientDisplay").innerHTML +="<tr class='custom-clickable-row-td'><td>"+change.doc.data().cfname+"</td><td>"+change.doc.data().clname+"</td><td>"
+                document.getElementById("CRMclientDisplay").innerHTML +="<tr class='custom-clickable-row-tdCRM'><td>"+change.doc.data().cfname+"</td><td>"+change.doc.data().clname+"</td><td>"
                 +change.doc.data().cemail+"</td><td>"+change.doc.data().corganization+"</td><td>"+change.doc.data().cdepartment+"</td></tr>"
                 
             }
@@ -1352,9 +1352,46 @@ clientsCollection.onSnapshot(function(querySnapshot) {
 });
 
 
-/****************************Store Client fname on Clicking Client Table's Row****************************/
+/****************************CRM Store Client fname on Clicking Client Table's Row****************************/
 
-$(document).on('click', '.custom-clickable-row-td', function(e){
+$(document).on('click', '.custom-clickable-row-tdCRM', function(e){
+    // var url = $(this).data('href');
+    e = e || window.event;
+
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+        target = target.parentNode;
+    }
+    if (target) {
+        var cells = target.getElementsByTagName("td");
+
+        //storing workTitle to local storage
+        localStorage.setItem("cfname", cells[0].innerHTML);
+        //alert(cells[0].innerHTML)
+    }
+    
+    //redirecting to add-work-edit
+    window.location.href = "CRM-view-client-form.html";
+});
+
+/****************************Manager Fill Client Table****************************/
+
+clientsCollection.onSnapshot(function(querySnapshot) {
+    if(document.getElementById("clientDisplay") != null){
+        querySnapshot.docChanges().forEach(function(change,i){
+            if(change.type === "added"){
+                document.getElementById("clientDisplay").innerHTML +="<tr class='custom-clickable-row-tdManager'><td>"+change.doc.data().cfname+"</td><td>"+change.doc.data().clname+"</td><td>"
+                +change.doc.data().cemail+"</td><td>"+change.doc.data().corganization+"</td><td>"+change.doc.data().cdepartment+"</td></tr>"
+                
+            }
+        });
+    }
+});
+
+
+/****************************CRM Store Client fname on Clicking Client Table's Row****************************/
+
+$(document).on('click', '.custom-clickable-row-tdManager', function(e){
     // var url = $(this).data('href');
     e = e || window.event;
 
@@ -1373,6 +1410,7 @@ $(document).on('click', '.custom-clickable-row-td', function(e){
     //redirecting to add-work-edit
     window.location.href = "view-client-form.html";
 });
+
 
 /****************************Loading of Client Add-Work-Edit****************************/
 
