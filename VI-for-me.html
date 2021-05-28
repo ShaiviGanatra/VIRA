@@ -342,7 +342,7 @@
                     var statusOptions = document.getElementById("statusoptions").value;
                         if(statusOptions == "In Progress"){
                             workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
-                                "Completestatus": " In Progress"
+                                "Completestatus": "In Progress"
                             }).then(() => { 
                                 // alert('Work Rejected Succesfully and notified to CRM');
                                 window.location.href = "VI-for-me.html";
@@ -350,7 +350,7 @@
                         }
                         else if(statusOptions == "Completed"){
                                 workAssignedCol.doc(localStorage.getItem("workAssignedId")).update({
-                                 "Completestatus": " Completed"
+                                 "Completestatus": "Completed"
                                  }).then(() => { 
                                 // alert('Work Rejected Succesfully and notified to CRM');
                                 window.location.href = "VI-for-me.html";
