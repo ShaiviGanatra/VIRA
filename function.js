@@ -508,12 +508,12 @@ $("#saveChangesWork").on("click", function() {
        // window.location.href = "work.html";
         alert("Work Assigned Succesfully");
         console.log("Work Assigned Succesfully");
-        window.location.href = "CRM-broadcast.html"
+        // window.location.href = "CRM-broadcast.html"
     });
 }
     }
     else{
-        window.location.href = "CRM-workavailable.html"
+        // window.location.href = "CRM-workavailable.html"
     } 
 });
 
@@ -1946,35 +1946,74 @@ userCollection.onSnapshot(function(querySnapshot) {
     }
 });
 
-/****************************Category Code on Clicking Category Option****************************/
+/****************************Save As New Button (Copy of Work) in Work Collection****************************/
 
-// $(document).on('click', '.custom-clickable-shortCodeCategory', function(e){
-//     // var url = $(this).data('href');
-//     alert("wihefnkjd");
-//     e = e || window.event;
-    
-//     var target = e.srcElement || e.target;
-//     while (target && target.nodeName !== "select") {
-//         target = target.parentNode;
-//     }
-//     if (target) {
-//         var cells = target.getElementsByTagName("option");
-//         alert("wihefnkjd");
-//         //storing workTitle to local storage
-//         localStorage.setItem("categoryName", cells[0].innerHTML);
+$("#saveAsNew").on("click", function() {
+    if(confirm("Save Work ?")){
+        // if (document.getElementById("workTitle") != localStorage.getItem("workTitle")) {
+    database.collection("Work").add({
+        "selectCategory": selectCategory.value,
+        "shortCode": shortCode.value,
+        "workTitle": workTitle.value,
+        "workDescription": workDescription.value,
+        "longDescription": longDescription.value,
+        "timeRequired": parseFloat(timeRequired.value),
+        "skillsRequired": skillsRequired.value,
+        "toolsRequired": toolsRequired.value,
+        "clientQuestions": clientQuestions.value,
+        // "trainingPDF": trainingPDF.value,
+        "videoTraining": videoTraining.value,
+        "workFolder": workFolder.value,
+        "workWikipedia": workWikipedia.value,
+        "relatedWork": relatedWork.value,
+        "status": 1,
+        createdAt: now
+    })
+    .then(function() {
+        // window.location.href = "work.html";
+         alert("Work Inserted Succesfully");
+         console.log("Work Inserted Succesfully");
+     }); 
+    if(assignedTo != "" && points.value !="") 
+    {
+    database.collection("workAssigned").add({
+        "selectCategory": selectCategory.value,
+        "shortCode": shortCode.value,
+        "workTitle": workTitle.value,
+        "workDescription": workDescription.value,
+        "longDescription": longDescription.value,
+        "timeRequired": timeRequired.value,
+        "skillsRequired": skillsRequired.value,
+        "toolsRequired": toolsRequired.value,
+        "clientQuestions": clientQuestions.value,
+        // "trainingPDF": trainingPDF.value,
+        "videoTraining": videoTraining.value,
+        "workFolder": workFolder.value,
+        "workWikipedia": workWikipedia.value,
+        "relatedWork": relatedWork.value,
+        "assignedTo" : assignedTo.value,
+        "points" : points.value,
+        "status": 5,
+        "Completestatus": "Assigned",
+        "AssignedAt": now
         
-//     }
-    
-//     //redirecting to add-work-edit
-//     // window.location.href = "CRM-workavailable.html";
-//  });
+    }).then(function() {
+        database.collection("Work").doc(localStorage.getItem("workId")).update({
+            "status":5
+        })
+       // window.location.href = "work.html";
+        alert("Work Assigned Succesfully");
+        console.log("Work Assigned Succesfully");
+        // window.location.href = "broadcast.html"
+    });
+}
+    }
+    // else{
+    //     alert("Work Title should be different");
+    // } 
+    // }
+    // else{
+    //     // window.location.href = "workavailable.html"
+    // }
+});
 
-// database.collection("Category").where("categoryName", "==", localStorage.getItem("categoryName")).onSnapshot(function(querySnapshot) {
-//     if(document.getElementById("shortCodeCat") != null){
-//         querySnapshot.docChanges().forEach(function(change,i){
-//             if(change.type === "added"){
-//                 document.getElementById("shortCodeCat").innerHTML += change.doc.data().categoryShortname;
-//             }
-//         });
-//     }
-// });
