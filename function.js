@@ -1966,7 +1966,7 @@ $("#saveAsNew").on("click", function() {
         "workFolder": workFolder.value,
         "workWikipedia": workWikipedia.value,
         "relatedWork": relatedWork.value,
-        "status": 1,
+        "status": 8,
         createdAt: now
     })
     .then(function() {
@@ -2017,3 +2017,15 @@ $("#saveAsNew").on("click", function() {
     // }
 });
 
+/****************************Not displaying Copy of Work on UI****************************/
+
+// workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
+//     if(document.getElementById("workDisplay") != null){
+//         querySnapshot.docChanges().forEach(function(change,i){
+//             if(change.type === "added"){
+//                 document.getElementById("workDisplay").innerHTML +="<tr class='custom-clickable-row'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
+//                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
+//             }
+//         });
+//     }
+// });
