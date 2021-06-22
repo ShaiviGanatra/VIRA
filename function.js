@@ -2016,16 +2016,3 @@ $("#saveAsNew").on("click", function() {
     //     // window.location.href = "workavailable.html"
     // }
 });
-
-/****************************Not displaying Copy of Work on UI****************************/
-
-// workCollection.where("status", "==", 1).onSnapshot(function(querySnapshot) {
-//     if(document.getElementById("workDisplay") != null){
-//         querySnapshot.docChanges().forEach(function(change,i){
-//             if(change.type === "added"){
-//                 document.getElementById("workDisplay").innerHTML +="<tr class='custom-clickable-row'><td>"+change.doc.data().workTitle+"</td><td>"+change.doc.data().selectCategory+"</td><td>"
-//                 +change.doc.data().workDescription+"</td><td>"+change.doc.data().skillsRequired+"</td><td>"+change.doc.data().toolsRequired+"</td></tr>"
-//             }
-//         });
-//     }
-// });
